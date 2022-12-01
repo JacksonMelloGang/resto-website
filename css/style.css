@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+    transition: .4s;
+}
+
+body {
+    margin: auto;
+    display: flex;
+    /*flex-direction: row;*/
+}
+
+/************************/
+/*        NAVBAR        */
+/************************/
+
+nav {
+    width: 10%;
+    /*height: 100vh;*/
+
+    position: sticky;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: rgb(45, 45, 45);
+    box-shadow: 10px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+#navlogo {
+    margin: 10px;
+}
+
+#navcontent {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#navcontent ul {
+    margin: 0;
+    padding: 0;
+}
+
+#navcontent ul li {
+    list-style: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#navcontent ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.container {
+    width: 90%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+/************************/
+/*        SEARCH        */
+/************************/
+#search {
+    position: absolute;
+
+    top: 10%;
+    right: 0%;
+
+    background-color: rgb(45, 84, 156);
+
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    display: flex;
+    align-items: center;
+}
+
+#search:hover {
+    /**transform: translateX(-100%);**/
+    transition: .4s;
+
+}
+
+#search-criteria {
+    display: none;
+
+    text-align: center;
+}
+
+#searchform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#searchform input {
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+#searchform input:focus {
+    outline: none;
+}
+
+#search-criteria a {
+    text-decoration: none;
+    color: white;
+}
+
+/************************/
+/*        TOPBAR        */
+/************************/
+
+.topbar {
+    position: sticky;
+    width: 100%;  
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    background-color: rgb(45, 45, 45);
+    /*box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);*/
+}
+
+#user-dropdown {
+    
+}
+
+#user-dropdown ul {
+    list-style-type: none;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#user-dropdown ul li {
+    padding: 10px;
+}
+
+#user-dropdown ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/************************/
+/*          ROW         */
+/************************/
+
+.row {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+
+.row > h1 {
+    font-size: 20px;
+}
+
+.row > .row-content {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/************************/
+/*         CARD         */
+/************************/
+
+.card {
+    width: 10%;
+    height: auto;
+
+    background-color: rgb(255, 255, 255);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.5);
+
+    margin: 10px;
+}
+
+.card > .descrCard {
+    text-align: center;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card > .photoCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card > .photoCard > img {
+    width: 50%;
+    aspect-ratio: 3/2;
+    object-fit: contain;
+}
