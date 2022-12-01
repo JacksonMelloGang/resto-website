@@ -2,7 +2,10 @@
 
 ob_start();
 
-include("components/topbar.php");
+if(isset($_SESSION["mailU"]) && isset($_SESSION["mdpU"])){
+    include("components/topbar.php");
+}
+
 include("components/search_popup.php");
 
 ?>
@@ -21,7 +24,7 @@ include("components/search_popup.php");
                 <div class="descrCard">
                     <h2><?= $restostendance[$i]["nomR"] ?></h2>
                     <p><?= $restostendance[$i]["descR"] ?></p>
-                    <a href="?action=detail&idR=<?= $resto["idR"] ?>">Voir plus</a>
+                    <a href="?action=detail&idR=<?= $restostendance[$i]["idR"] ?>">Voir plus</a>
                 </div>
             </div>
             <?php

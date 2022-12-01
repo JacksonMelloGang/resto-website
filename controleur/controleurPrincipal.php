@@ -4,10 +4,10 @@ function controleurPrincipal($action) {
     $lesActions = array();
 
     $lesActions["accueil"] = "home.php";
+    $lesActions["detail"] = "detailResto.php";
 
     $lesActions["defaut"] = "listeRestos.php";
     $lesActions["liste"] = "listeRestos.php";
-    $lesActions["detail"] = "detailResto.php";
     $lesActions["recherche"] = "rechercheResto.php";
     $lesActions["connexion"] = "connexion.php";
     $lesActions["deconnexion"] = "deconnexion.php";

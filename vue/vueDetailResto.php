@@ -1,3 +1,15 @@
+<?php
+
+ob_start();
+
+if(isset($_SESSION["mailU"]) && isset($_SESSION["mdpU"])){
+    include("components/topbar.php");
+}
+
+include("components/search_popup.php");
+
+?>
+
 
 <h1><?= $unResto['nomR']; ?>
 
@@ -21,6 +33,7 @@
         </a>
     <?php } ?>
 </span>
+
 <section>
     Cuisine <br />
     <ul id="tagFood">		
@@ -90,3 +103,7 @@
     <?php } ?>
 
 </ul>
+
+<?php
+$content = ob_get_clean();
+include "vue/layout/layout.php"; // On inclut le layout
