@@ -23,7 +23,6 @@ $mailU = getMailULoggedOn();
 $aimer = getAimerById($mailU, $idR);
 $critiques = getCritiquerByIdR($idR);
 
-
 // appel du script de vue qui permet de gerer l'affichage des donnees
 $titre = "detail d'un restaurant";
 

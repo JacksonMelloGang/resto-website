@@ -37,6 +37,23 @@ function getUtilisateurByMailU($mailU) {
     return $resultat;
 }
 
+function getUsernameByMailU($mailU) {
+
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("select pseudoU from utilisateur where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["pseudoU"];
+}
+
 function addUtilisateur($mailU, $mdpU, $pseudoU) {
     try {
         $cnx = connexionPDO();
@@ -55,7 +72,21 @@ function addUtilisateur($mailU, $mdpU, $pseudoU) {
     return $resultat;
 }
 
-
+function getUtilisateurRang($mailU){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("select rangU from utilisateur where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["rangU"];
+}
 
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
     // prog principal de test

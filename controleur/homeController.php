@@ -9,4 +9,3 @@ $restos = getRestos();
 
 // show page
 include("$racine/vue/vueHome.php");
-

@@ -2,12 +2,10 @@
 
 ob_start();
 
-if(isset($_SESSION["mailU"]) && isset($_SESSION["mdpU"])){
-    include("components/topbar.php");
-}
-
+include("components/topbar.php");
 include("components/search_popup.php");
 
+// PAGE CONTENT
 ?>
 
 <div class="row">
