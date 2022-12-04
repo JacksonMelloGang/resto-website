@@ -2,7 +2,10 @@
 
 ob_start();
 
-include("components/topbar.php");
+if(isset($_SESSION['mailU'])){
+    include("components/topbar.php");
+}
+
 include("components/search_popup.php");
 
 // PAGE CONTENT

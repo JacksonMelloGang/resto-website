@@ -10,17 +10,17 @@ include("components/search_popup.php");
 
 ?>
 
+<!-- RESTO NOM -->
+<h1><?= $unResto['nomR']; ?></h1>
 
-<h1><?= $unResto['nomR']; ?>
+<!-- FOOD TAG -->
+<ul id="tagFood" >		
+        <?php for ($j = 0; $j < count($lesTypesCuisine); $j++) { ?>
+            <li class="tag"><span class="tag">#</span><?= $lesTypesCuisine[$j]["libelleTC"] ?></li>
+        <?php } ?>
+</ul>
 
-    <?php if ($aimer != false) { ?>
-        <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aime.png" alt="j'aime ce restaurant"></a>
-    <?php } else { ?>
-        <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aimepas.png" alt="je n'aime pas encore ce restaurant"></a>
-    <?php } ?>
-
-</h1>
-
+<!-- NOTE -->
 <span id="note">
     <?php for ($i = 1; $i <= 5; $i++) { ?>
         <a class="aimer" href="./?action=noter&note=<?= $i ?>&idR=<?= $unResto['idR']; ?>" >
@@ -34,75 +34,113 @@ include("components/search_popup.php");
     <?php } ?>
 </span>
 
-<section>
-    Cuisine <br />
-    <ul id="tagFood">		
-        <?php for ($j = 0; $j < count($lesTypesCuisine); $j++) { ?>
-            <li class="tag"><span class="tag">#</span><?= $lesTypesCuisine[$j]["libelleTC"] ?></li>
-        <?php } ?>
-    </ul>
 
-</section>
-<p id="principal">
-    <?php if (count($lesPhotos) > 0) { ?>
-        <img src="photos/<?= $lesPhotos[0]["cheminP"] ?>" alt="photo du restaurant" />
-    <?php } ?>
-    <br />
-    <?= $unResto['descR']; ?>
-</p>
-<h2 id="adresse">
-    Adresse
-</h2>
-<p>
-    <?= $unResto['numAdrR']; ?>
-    <?= $unResto['voieAdrR']; ?><br />
-    <?= $unResto['cpR']; ?>
-    <?= $unResto['villeR']; ?>
+<!-- RESTO INFO CONTENT -->
+<div style="display: flex; flex-direction: row;justify-content:center;text-align:center;width:70%;border: black 2px solid;border-radius:5px;">
+    <img src="photos/<?= $lesPhotos[0]["cheminP"]; ?>" alt="image du restaurant" style="width: 50%; object-fit: contain;">
+    <div style="display:flex; flex-direction: column; text-align: center;width:70%;margin-left:10px;">
+        <h2>Adresse</h2>
+        <p><?php printf("%s, %s - %s, %s", $unResto['cpR'], $unResto['villeR'], $unResto['numAdrR'], $unResto['voieAdrR']); ?></p>
+        <!-- google map search with query using api key-->
+        <a href='https://www.google.com/maps/search/?api=1&query=<?= $unResto['nomR'] ?>, <?= $unResto['cpR'] ?>, <?= $unResto['villeR'] ?>'>Voir sur Google Maps</a>
 
-</p>
+        <br>
+        <h2>Horaires</h2>
+        <?= $unResto['horairesR']; ?>
 
-<h2 id="photos">
-    Photos
-</h2>
-<ul id="galerie">
-    <?php for ($i = 0; $i < count($lesPhotos); $i++) { ?>
-        <li> <img class="galerie" src="photos/<?= $lesPhotos[$i]["cheminP"] ?>" alt="" /></li>
-    <?php } ?>
+        <!--
+        <h2>Numéro de téléphone</h2>
+        <p><?= $unResto['telephoneR']; ?></p>
 
-</ul>
+        <h2>Site web</h2>
+        <p><?= $unResto['siteWebR']; ?></p>
+        -->
+    </div>    
+</div>
+<div style="width:70%;">
+    <h2>Description</h2>
+    <p style="text-align:left;border: black 2px solid;border-radius:5px;padding: 10px;"><?= $unResto['descR']; ?></p>
+</div>
 
-<h2 id="horaires">
-    Horaires
-</h2> 
-<?= $unResto['horairesR']; ?>
-
-
-<h2 id="crit">Critiques</h2>
-
-<ul id="critiques">
-    <?php for ($i = 0; $i < count($critiques); $i++) { ?>
-        <li>
-            <span>
-                <?= $critiques[$i]["mailU"] ?> 
-                <?php if ($critiques[$i]["mailU"] == $mailU) { ?>
-                    <a href='./?action=supprimerCritique&idR=<?= $unResto['idR']; ?>'>Supprimer</a>
-                <?php } ?>
-            </span>
-            <div>
-                <span>
-                    <?php
-                    if ($critiques[$i]["note"]) {
-                        echo $critiques[$i]["note"] . "/5";
-                    }
-                    ?>
-                </span>
-                <span><?= $critiques[$i]["commentaire"] ?> </span>
+<!-- RESTO PHOTO CAROUSSEL -->
+<div style="width:70%;">
+    <h2 id="photos">Photos</h2>
+    <div style="height:auto;border: black 2px solid;border-radius:5px;padding: 10px;">
+        <div class="slider">
+            <div class="slide-track">
+                <?php 
+                    for ($i = 0; $i < count($lesPhotos); $i++) { 
+                        echo("<div class='slide'> <img class='galerie' src='photos/". $lesPhotos[$i]["cheminP"] . "' alt='' /></div>");
+                    } 
+                ?>
             </div>
+        </div>
+    </div>
+</div>
 
-        </li>
+
+
+    <?php if ($aimer !== false) { ?>
+        <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aime.png" alt="j'aime ce restaurant"></a>
+    <?php } else { ?>
+        <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aimepas.png" alt="je n'aime pas encore ce restaurant"></a>
     <?php } ?>
 
-</ul>
+
+<div style="width:70%;margin-bottom: 5%">
+    <h2 id="crit">Critiques</h2>
+
+    <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
+            <?php for ($i = 0; $i < count($critiques); $i++) { ?>
+                <div style="border: red 2px solid; padding: 10px;">
+                    <span style="position:relative;font-size: 22px;font-weight: bold;">
+                        <?= $critiques[$i]["pseudoU"] ?> 
+                    </span>
+                    <div>
+                        <span>
+                            <?php
+                            if ($critiques[$i]["note"]) {
+                                echo $critiques[$i]["note"] . "/5";
+                            }
+                            ?>
+                        </span>
+                        <span><?= $critiques[$i]["commentaire"] ?> </span>
+                        <br>
+                        <span style="position:relative;margin-right:auto !important">
+                            <?php
+                                if($critiques[$i]["mailU"] == $mailU){
+                                    echo "<a href='./?action=supprimerCritique&idR=".$critiques[$i]["idR"]."'>Supprimer</a>";
+                                }
+                            ?>
+                        </span>
+                    </div>
+
+                </div>
+            <?php } ?>
+
+            <!-- FORMULAIRE AJOUTER CRITIQUE  -->
+            <h2 id="crit">Ajouter une critique</h2>
+            <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
+                <form action="./?action=ajouterCritique&idR=<?= $unResto['idR']; ?>" method="post">
+                    <label for="note">Note</label>
+                    <select name="note" id="note">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br><br>
+                    <label for="commentaire">Commentaire</label><br>
+                    <textarea style="resize: none;width: 20%;" name="commentaire" id="commentaire" cols="30" rows="3" ></textarea>
+                    <br>
+                    <input style="margin-top: 10px" type="submit" value="Ajouter">
+                </form>
+            </div>
+        </div>
+</div>
+
 
 <?php
 $content = ob_get_clean();

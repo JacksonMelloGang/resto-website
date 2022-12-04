@@ -7,7 +7,7 @@ function getCritiquerByIdR($idR) {
 
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("select * from critiquer where idR=:idR");
+        $req = $cnx->prepare("select critiquer.*, utilisateur.pseudoU from critiquer, utilisateur where idR=:idR AND critiquer.mailU = utilisateur.mailU");
         $req->bindValue(':idR', $idR, PDO::PARAM_INT);
         
         $req->execute();

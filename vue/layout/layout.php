@@ -32,5 +32,7 @@
                 document.getElementById("search-criteria").style.display = "none";
             }
         </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-EwYxjbFmeccW8uOnGR4dB6_wKkbZaQE&libraries=places"></script>
     </body>
 </html>
