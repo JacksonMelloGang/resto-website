@@ -2,26 +2,32 @@
 <!-- Path: vue\layout\index.htm -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body style="margin:auto;">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Se connecter</title>
 
-    <div id="" style="background-color:red;height: 100vh;display:flex;justify-content: center;">
-        <div style="background-color: cornflowerblue;padding-left: 10%;padding-right: 10%;display: flex;text-align: center;flex-direction: column;justify-content: center;">
-            <h2>Se Connecter</h2>
-            <form method="POST">
-                <label for="email">Email address</label><br>
-                <input type="email" class="form-control" name="email" aria-describedby="emailHelp"><br>
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <style>
 
+        </style>
+    </head>
+    <body style="margin:auto;">
 
-                <br>
+        <div id="" style="background-color:red;height: 100vh;display:flex;justify-content: center;align-items: center">
+            <div style="background-color: cornflowerblue;padding-left: 10%;padding-right: 10%;display: flex;text-align: center;flex-direction: column;justify-content: center;height: auto;">
+                <h2>Se Connecter</h2>
+                <form method="POST">
+                    <label for="email">Email address</label><br>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
 
-                <label for="email"></label>
-                <input type="password" name="password" class="">
-                <input type="submit" class="btn btn-primary" value="Se connecter">
-            </form>
+                    <br>
+
+                    <label for="password">Password</label><br>
+                    <input type="password" id="password" name="password" class=""><br>
+                    <input type="submit" class="btn btn-primary" value="Se connecter">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

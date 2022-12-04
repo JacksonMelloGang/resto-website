@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= $title ?></title>
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/resources/css/style.css">
     </head>
     <body>
 
@@ -19,19 +19,7 @@
             <?php include("vue/components/footer.php") ?>
         </div>
 
-        <!-- SCRIPT -->
-        <script>
-            document.getElementById("search").onmouseover = function() {mouseOver()};
-            document.getElementById("search").onmouseout = function() {mouseOut()};
 
-            function mouseOver() {
-                document.getElementById("search-criteria").style.display = "block";
-            }
-
-            function mouseOut() {
-                document.getElementById("search-criteria").style.display = "none";
-            }
-        </script>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-EwYxjbFmeccW8uOnGR4dB6_wKkbZaQE&libraries=places"></script>
     </body>

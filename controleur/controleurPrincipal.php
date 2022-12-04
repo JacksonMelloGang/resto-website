@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Will always return an array of 2 elements: the controller (filename) & the function (name)
+ * @param string $action
+ * @return array
+ */
 function controleurPrincipal($action) {
     
     global $registered_routes;
@@ -7,70 +12,63 @@ function controleurPrincipal($action) {
     $registered_routes = array(
         "home" => "homeController",
         "restaurants" => "restaurantController",
-        "critiques" => "critiqueController",
-        "utilisateurs" => "utilisateurController",
+        "restaurant" => "restaurantController",
+
+        "addCritique" => "critiqueController",
+        "delCritique" => "critiqueController",
+        "editCritique" => "critiqueController",
+
+        "aimer" => "aimerController",
+
+        "users" => "utilisateurController",
+        "user" => "utilisateurController",
+
         "photos" => "photoController",
-        "login" => "loginController",
-        "logout" => "logoutController",
-        "register" => "registerController",
+
+        "showLogin" => "authenticationController",
+        "connect" => "authenticationController",
+        "disconnect" => "authenticationController",
+        "register" => "authenticationController",
         "admin" => "adminController",
 
-        "404" => "errorController"
+        "404" => "errorController",
+        "missingFunction" => "errorController",
+        "missingRoute" => "errorController",
+        "missingModele" => "errorController",
+        "missingVue" => "errorController"
     );
 
-    $ok = true;
-
+    // if route is registered
     if(array_key_exists($action, $registered_routes)){
-        include("controleur\\" . $registered_routes[$action] . ".php");
+        require("controleur\\" . $registered_routes[$action] . ".php");
 
-        if(function_exists($registered_routes[$action])){
+        if(function_exists($action)){
+            // controller and function exist - normal operation
             return array($registered_routes[$action], $action);
         } else {
-            $ok = false;
+            // function not exist
+            return array("errorController", "missingFunction");
         }
     } else {
-        $ok = false; 
-    }
-
-    if(!$ok){
+        // route not exist
         return array("errorController", "error404");
     }
-
-
-    /**
-     
-    $lesActions = array();
-
-    $lesActions["accueil"] = "homeController.php";
-    $lesActions["liste"] = "restaurantController.php";
-    $lesActions["detail"] = "detailRestoController.php";
-
-    $lesActions["recherche"] = "rechercheResto.php";
-    $lesActions["cgu"] = "cgu.php";
-
-    $lesActions["profil"] = "monProfil.php";
-    $lesActions["aimer"] = "aimer.php";
-
-
-    $lesActions["connexion"] = "connexionController.php";
-    $lesActions["inscription"] = "inscription.php";
-    $lesActions["deconnexion"] = "deconnexion.php";
-
-    $lesActions["defaut"] = "listeRestos.php";
-
-    if (array_key_exists($action, $lesActions)) {
-        return $lesActions[$action];
-    } 
-    else {
-        return $lesActions["defaut"];
-    }
-    */
 }
 
 function register_route($action, $controller) {
     global $registered_routes;
 
     $registered_routes[$action] = $controller;
+}
+
+function get_controller($action) {
+    global $registered_routes;
+
+    if(array_key_exists($action, $registered_routes)){
+        return $registered_routes[$action];
+    } else {
+        return null;
+    }
 }
 
 ?>

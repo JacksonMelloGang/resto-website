@@ -126,14 +126,14 @@ Dans les commentaires peuvent être évalués :
 
         </tfoot>
         <tbody>
-            <tr><td class="label">Consulter une fiche restaurant</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>	</tr>
-            <tr><td class="label">Recherche un restaurant</td>			<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>	</tr>
-            <tr><td class="label">Commenter un restaurant</td>			<td class="cell">	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
-            <tr><td class="label">Noter un restaurant</td>				<td class="cell">	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
-            <tr><td class="label">Editer la fiche d'un restaurant</td>	<td class="cell">	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>	</tr>
-            <tr><td class="label">Ajouter une photo d'un restaurant</td>	<td class="cell">	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>	</tr>
-            <tr><td class="label">Gérer une liste de favoris</td>			<td class="cell">	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
-            <tr><td class="label">Suggestion automatique</td>				<td class="cell">	</td>		<td class="cell"><img src="../images/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
+            <tr><td class="label">Consulter une fiche restaurant</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>	</tr>
+            <tr><td class="label">Recherche un restaurant</td>			<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>	</tr>
+            <tr><td class="label">Commenter un restaurant</td>			<td class="cell">	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
+            <tr><td class="label">Noter un restaurant</td>				<td class="cell">	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
+            <tr><td class="label">Editer la fiche d'un restaurant</td>	<td class="cell">	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>	</tr>
+            <tr><td class="label">Ajouter une photo d'un restaurant</td>	<td class="cell">	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>	</tr>
+            <tr><td class="label">Gérer une liste de favoris</td>			<td class="cell">	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
+            <tr><td class="label">Suggestion automatique</td>				<td class="cell">	</td>		<td class="cell"><img src="../resources/img/coche.png" alt="case cochée" />	</td>		<td class="cell">	</td>	</tr>
         </tbody>
     </table>
 </div>

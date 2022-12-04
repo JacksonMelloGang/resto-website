@@ -12,20 +12,14 @@ $idR = filter_input(INPUT_POST, 'idR', FILTER_SANITIZE_NUMBER_INT);
 $mailU = filter_input(INPUT_POST, 'mailU', FILTER_SANITIZE_EMAIL);
 
 
-switch($_POST['func']){
-    case "ajouterCritique":
-        ajouterCritique($_POST['idR'], $_POST['mailU'], $_POST['note'], $_POST['commentaire']);
-        break;
-    case "supprimerCritique":
-        supprimerCritique($_POST['idR'], $_POST['mailU']);
-        break;
+function addCritique(){
+    ajouterCritique($_POST['idR'], $_POST['mailU'], $_POST['note'], $_POST['commentaire']);
+}
 
-    case "modifierCritique":
-        modifierCritique($_POST['idR'], $_POST['mailU'], $_POST['note'], $_POST['commentaire']);
-        break;
+function delCritique(){
+    supprimerCritique($_POST['idR'], $_POST['mailU']);
+}
 
-    default:
-    
-
-    break;
+function editCritique(){
+    modifierCritique($_POST['idR'], $_POST['mailU'], $_POST['note'], $_POST['commentaire']);
 }

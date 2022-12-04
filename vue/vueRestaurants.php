@@ -25,7 +25,7 @@ include("components/search_popup.php");
                 <div class="descrCard">
                     <h2><?= $restostendance[$i]["nomR"] ?></h2>
                     <p><?= $restostendance[$i]["descR"] ?></p>
-                    <a href="?action=detail&idR=<?= $restostendance[$i]["idR"] ?>">Voir plus</a>
+                    <a href="?action=restaurant&idR=<?= $restostendance[$i]["idR"] ?>">Voir plus</a>
                 </div>
             </div>
             <?php
@@ -58,7 +58,7 @@ include("components/search_popup.php");
                 <div class="descrCard">
                     <h2><?= $resto["nomR"] ?></h2>
                     <p><?= $resto["descR"] ?></p>
-                    <a href="?action=detail&idR=<?= $resto["idR"] ?>">Voir plus</a>
+                    <a href="?action=restaurant&idR=<?= $resto["idR"] ?>">Voir plus</a>
                 </div>
             </div>
             <?php

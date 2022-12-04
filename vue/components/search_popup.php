@@ -1,5 +1,6 @@
+<!-- SEARCH COMPONENT -->
 <div id="search">
-    <img src="/images/rechercher.png" alt="Rechercher">
+    <img src="/resources/img/rechercher.png" alt="Rechercher">
     <div id="search-criteria">
 
         <form id="searchform">
@@ -10,3 +11,18 @@
 
     </div>
 </div>
+
+<!-- SCRIPT -->
+<script>
+    document.getElementById("search").onmouseover = function() {mouseOver()};
+    document.getElementById("search").onmouseout = function() {mouseOut()};
+
+    function mouseOver() {
+        document.getElementById("search-criteria").style.display = "block";
+    }
+
+    function mouseOut() {
+        document.getElementById("search-criteria").style.display = "none";
+    }
+</script>
+<!-- END SCRIPT  - END SEARCH COMPONENT -->
