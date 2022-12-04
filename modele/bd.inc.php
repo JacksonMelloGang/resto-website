@@ -16,6 +16,11 @@ function connexionPDO() {
     }
 }
 
+function catch_sqlexception($e){
+    print "Erreur !: " . $e->getMessage();
+    die();
+}
+
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
     // prog de test
     header('Content-Type:text/plain');

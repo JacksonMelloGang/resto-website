@@ -1,9 +1,48 @@
 <?php
+
 function controleurPrincipal($action) {
+    
+    global $registered_routes;
+
+    $registered_routes = array(
+        "home" => "homeController",
+        "restaurants" => "restaurantController",
+        "critiques" => "critiqueController",
+        "utilisateurs" => "utilisateurController",
+        "photos" => "photoController",
+        "login" => "loginController",
+        "logout" => "logoutController",
+        "register" => "registerController",
+        "admin" => "adminController",
+
+        "404" => "errorController"
+    );
+
+    $ok = true;
+
+    if(array_key_exists($action, $registered_routes)){
+        include("controleur\\" . $registered_routes[$action] . ".php");
+
+        if(function_exists($registered_routes[$action])){
+            return array($registered_routes[$action], $action);
+        } else {
+            $ok = false;
+        }
+    } else {
+        $ok = false; 
+    }
+
+    if(!$ok){
+        return array("errorController", "error404");
+    }
+
+
+    /**
+     
     $lesActions = array();
 
-    $lesActions["accueil"] = "restoController.php";
-    $lesActions["liste"] = "listeRestos.php";
+    $lesActions["accueil"] = "homeController.php";
+    $lesActions["liste"] = "restaurantController.php";
     $lesActions["detail"] = "detailRestoController.php";
 
     $lesActions["recherche"] = "rechercheResto.php";
@@ -25,6 +64,13 @@ function controleurPrincipal($action) {
     else {
         return $lesActions["defaut"];
     }
+    */
+}
+
+function register_route($action, $controller) {
+    global $registered_routes;
+
+    $registered_routes[$action] = $controller;
 }
 
 ?>

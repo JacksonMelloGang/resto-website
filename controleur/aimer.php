@@ -15,8 +15,8 @@ $mailU = getMailULoggedOn();
 if ($mailU != "") {
     $aimer = getAimerById($mailU, $idR);
 
-// traitement si necessaire des donnees recuperees
-    ;
+    // traitement si necessaire des donnees recuperees
+    
     if ($aimer == false) {
         addAimer($mailU, $idR);
     } else {

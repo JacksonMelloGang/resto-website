@@ -18,10 +18,19 @@ $unResto = getRestoByIdR($idR);
 
 $lesTypesCuisine = getTypesCuisineByIdR($idR);
 $lesPhotos = getPhotosByIdR($idR);
-$noteMoy = round(getNoteMoyenneByIdR($idR), 0);
+$noteMoy = getNoteMoyenneByIdR($idR);
 $mailU = getMailULoggedOn();
 $aimer = getAimerById($mailU, $idR);
 $critiques = getCritiquerByIdR($idR);
+
+// traitement si necessaire des donnees recuperees
+if($noteMoy === null){
+    $noteMoy = 0;
+}
+
+if($critiques === null){
+    $critiques = ['pseudoU' => "aucune critique", "", ""];
+}
 
 // appel du script de vue qui permet de gerer l'affichage des donnees
 $titre = "Detail d'un restaurant";

@@ -16,7 +16,6 @@ switch($_POST['func']){
     case "ajouterCritique":
         ajouterCritique($_POST['idR'], $_POST['mailU'], $_POST['note'], $_POST['commentaire']);
         break;
-
     case "supprimerCritique":
         supprimerCritique($_POST['idR'], $_POST['mailU']);
         break;
