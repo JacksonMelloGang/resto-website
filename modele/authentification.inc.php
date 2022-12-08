@@ -40,6 +40,7 @@ function getMailULoggedOn(){
     else {
         $ret = "";
     }
+    
     return $ret;
         
 }
