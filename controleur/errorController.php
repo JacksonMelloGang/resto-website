@@ -53,4 +53,12 @@ function missingVue($action) {
     include "{$GLOBALS['racine']}/vue/vueError.php";
 }
 
+function missingController($action) {
+    $title = "Erreur 404";
+    $error = "MISSING CONTROLLER";
+    $errormessage = "Erreur 404 - Le controller pour la fonction <em><strong>$action</strong></em> n'a pas été trouvée.";
+
+    include "{$GLOBALS['racine']}/vue/vueError.php";
+}
+
 ?>

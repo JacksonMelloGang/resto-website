@@ -6,6 +6,7 @@ include_once "{$GLOBALS['racine']}/modele/bd.photo.inc.php";
 include_once "{$GLOBALS['racine']}/modele/bd.critiquer.inc.php";
 include_once "{$GLOBALS['racine']}/modele/bd.aimer.inc.php";
 include_once "{$GLOBALS['racine']}/modele/authentification.inc.php";
+
 function restaurants(){
     $title = "Liste Des Restaurants";
     $restostendance = getRestoTendance(5);
@@ -26,7 +27,8 @@ function restaurant(){
     $mailU = getMailULoggedOn();
     $aimer = getAimerById($mailU, $idR);
     $critiques = getCritiquerByIdR($idR);
-    
+    $hasAlreadyCommented = false;
+
     // traitement si necessaire des donnees recuperees
     if($noteMoy === null){
         $noteMoy = 0;
@@ -34,6 +36,12 @@ function restaurant(){
 
     if($critiques === null){
         $critiques = ['pseudoU' => "aucune critique", "", ""];
+    }
+
+    foreach($critiques as $critique){
+        if($critique['mailU'] === $mailU){
+            $hasAlreadyCommented = true;
+        }
     }
 
     // show page

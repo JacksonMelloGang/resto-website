@@ -49,7 +49,7 @@ function getNoteMoyenneByIdR($idR) {
 function ajouterCritique($idR, $mailU, $note, $commentaire) {
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("insert into critiquer values (:idR, :mailU, :note, :commentaire)");
+        $req = $cnx->prepare("INSERT INTO critiquer values (:idR, :mailU, :note, :commentaire)");
         $req->bindValue(':idR', $idR, PDO::PARAM_INT);
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':note', $note, PDO::PARAM_INT);
@@ -63,13 +63,14 @@ function ajouterCritique($idR, $mailU, $note, $commentaire) {
 }
 
 function supprimerCritique($idR, $mailU) {
+    
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("delete from critiquer where idR=:idR AND mailU=:mailU");
+        $req = $cnx->prepare("DELETE from critiquer where idR=:idR AND mailU=:mailU");
         $req->bindValue(':idR', $idR, PDO::PARAM_INT);
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
-        
         $req->execute();
+        
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
         die();
@@ -79,7 +80,7 @@ function supprimerCritique($idR, $mailU) {
 function modifierCritique($idR, $mailU, $note, $commentaire) {
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("update critiquer set note=:note, commentaire=:commentaire where idR=:idR AND mailU=:mailU");
+        $req = $cnx->prepare("UPDATE critiquer set note=:note, commentaire=:commentaire where idR=:idR AND mailU=:mailU");
         $req->bindValue(':idR', $idR, PDO::PARAM_INT);
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':note', $note, PDO::PARAM_INT);

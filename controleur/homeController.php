@@ -1,7 +1,7 @@
 <?php
 
 function home(){
-    $title = "Home";
-    $content = "home";
-    require "vue/layout/layout.php";
+    $title = "Resto - Accueil";
+
+    require "vue/vueHome.php";
 }

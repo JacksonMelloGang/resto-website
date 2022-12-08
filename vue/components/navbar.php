@@ -4,9 +4,9 @@
             <img src="/resources/img/logoBarre.png">
         </div>
         <ul>
-            <li><a href="?action=accueil">Accueil</a></li>
-            <li><a href="?action=accueil">Restaurants</a></li>
-            <li><a href="?action=menu">Menu</a></li>
+            <li><a href="?action=home">Accueil</a></li>
+            <li><a href="?action=restaurants">Restaurants</a></li>
+            <li><a href="?action=menus">Menu</a></li>
 
 
             <!--<li><a href="/contact.html">Connexion</a></li>-->
@@ -17,20 +17,17 @@
         <div id="login-navbar">
             <?php
             
-            if(isLoggedOn()){
-                echo '<div id="navprofil">
-                <a href="?action=profil"><img src="/resources/img/profil.png"></a>
-                <a href="?action=deconnexion"><img src="/resources/img/deconnexion.png"></a>
-                </div>';
-            } else{
-                echo '<div id="navprofil">
-                <a href="?action=connexion"><img src="/resources/img/connexion.png"></a>
-                <a href="?action=inscription"><img src="/resources/img/inscription.png"></a>
-                </div>';
-            }
-            
-            ?>
+            if(isLoggedOn()){ ?>
+                <div id="navprofil">
+                    <a href="?action=monProfil"><img src="/resources/img/profil.png"></a>
+                    <a href="?action=disconnect"><img src="/resources/img/deconnexion.png"></a>
+                </div>
+            <?php } else{ ?>
+                <div id="navprofil">
+                    <a href="?action=showLogin"><img src="/resources/img/connexion.png"></a>
+                    <a href="?action=showRegister"><img src="/resources/img/inscription.png"></a>
+                </div>
+            <?php } ?>
         </div>
-
     </div>
 </nav>

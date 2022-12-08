@@ -54,15 +54,16 @@ function getUsernameByMailU($mailU) {
     return $resultat["pseudoU"];
 }
 
-function addUtilisateur($mailU, $mdpU, $pseudoU) {
+function addUtilisateur($mailU, $mdpU, $pseudoU, $rang = 0) {
     try {
         $cnx = connexionPDO();
 
         $mdpUCrypt = crypt($mdpU, "sel");
-        $req = $cnx->prepare("insert into utilisateur (mailU, mdpU, pseudoU) values(:mailU,:mdpU,:pseudoU)");
+        $req = $cnx->prepare("insert into utilisateur (mailU, mdpU, pseudoU, rangU) values(:mailU,:mdpU,:pseudoU,:rangU)");
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':mdpU', $mdpUCrypt, PDO::PARAM_STR);
         $req->bindValue(':pseudoU', $pseudoU, PDO::PARAM_STR);
+        $req->bindValue(':rangU', $rang, PDO::PARAM_INT);
         
         $resultat = $req->execute();
     } catch (PDOException $e) {
@@ -87,6 +88,112 @@ function getUtilisateurRang($mailU){
     
     return $resultat["rangU"];
 }
+
+function isBanned($mailU){
+    $banned = false;
+
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("select is_banned from utilisateur where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+        if ($resultat["is_banned"] == 1) {
+            $banned = true;
+        }
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+
+    return $banned;
+}
+
+function banUser($mailU){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("update utilisateur set is_banned = 1 where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["rangU"];
+}
+
+function unbanUser($mailU){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("update utilisateur set is_banned = 0 where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["rangU"];
+}
+
+function updatePassword($mailU, $mdp){
+    try {
+        $cnx = connexionPDO();
+        $mdpUCrypt = crypt($mdp, "sel");
+        $req = $cnx->prepare("update utilisateur set mdpU = :mdpU where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->bindValue(':mdpU', $mdpUCrypt, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["rangU"];
+}
+
+function updateUsername($mailU, $pseudo){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("UPDATE utilisateur set pseudoU = :pseudoU where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->bindValue(':pseudoU', $pseudo, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["rangU"];
+}
+
+function updateEmail($mailU, $newMail){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("UPDATE utilisateur set mailU = :newMail where mailU=:mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->bindValue(':newMail', $newMail, PDO::PARAM_STR);
+        $req->execute();
+        
+        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    
+    return $resultat["rangU"];
+}
+
 
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
     // prog principal de test

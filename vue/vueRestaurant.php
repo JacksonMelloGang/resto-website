@@ -79,11 +79,13 @@ include("components/search_popup.php");
 </div>
 
 
+    <?php if(isLoggedOn()){ ?>
+        <?php if ($aimer !== false) { ?>
+            <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aime.png" alt="j'aime ce restaurant"></a>
+        <?php } else { ?>
+            <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aimepas.png" alt="je n'aime pas encore ce restaurant"></a>
+        <?php } ?>
 
-    <?php if ($aimer !== false) { ?>
-        <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aime.png" alt="j'aime ce restaurant"></a>
-    <?php } else { ?>
-        <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aimepas.png" alt="je n'aime pas encore ce restaurant"></a>
     <?php } ?>
 
 
@@ -116,12 +118,12 @@ include("components/search_popup.php");
                     </div>
 
                 </div>
-            <?php } ?>
+            <?php } 
 
-            <!-- FORMULAIRE AJOUTER CRITIQUE  -->
-            <h2 id="crit">Ajouter une critique</h2>
-            <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
-                <form action="./?action=ajouterCritique&idR=<?= $unResto['idR']; ?>" method="post">
+            if(isLoggedOn() && $hasAlreadyCommented == false){?>
+                <h2 id="crit">Ajouter une critique</h2>
+                    <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
+                <form action="./?action=addCritique" method="post">
                     <label for="note">Note</label>
                     <select name="note" id="note">
                         <option value="0">0</option>
@@ -135,9 +137,16 @@ include("components/search_popup.php");
                     <label for="commentaire">Commentaire</label><br>
                     <textarea style="resize: none;width: 20%;" name="commentaire" id="commentaire" cols="30" rows="3" ></textarea>
                     <br>
+
+                    <input type="hidden" name="idR" value="<?= $unResto['idR'] ?> ">
+                    <input type="hidden" name="mailU" value="<?= $_SESSION["mailU"] ?> ">
                     <input style="margin-top: 10px" type="submit" value="Ajouter">
                 </form>
-            </div>
+            </div>                
+            <?php } else if($hasAlreadyCommented == false) { ?>
+                <br>
+                <a href="index.php?action=showLogin">Envie de commenter ? Connecte toi</a>             
+            <?php } ?> 
         </div>
 </div>
 
