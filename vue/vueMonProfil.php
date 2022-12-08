@@ -18,6 +18,6 @@ les types de cuisine que j'aime :
 <?php } ?>
 </ul>
 <hr>
-<a href="./?action=deconnexion">se deconnecter</a>
+<a href="./?action=disconnect">se deconnecter</a>
 
 

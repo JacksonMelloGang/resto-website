@@ -1,17 +1,21 @@
 <?php
 
-require_once "modele\authentification.inc.php";
-require_once "modele\utilisateur.inc.php";
+require_once "{$GLOBALS['racine']}\modele\authentification.inc.php";
+require_once "{$GLOBALS['racine']}\modele\bd.utilisateur.inc.php";
+require_once "{$GLOBALS['racine']}\modele\bd.resto.inc.php";
+require_once "{$GLOBALS['racine']}\modele\bd.typecuisine.inc.php";
 
 
 function monProfil(){
     if (isLoggedOn()) {
         $mailU = getMailULoggedOn();
-        $util = getUtilisateurByMailU($mailU);
+        $util = getUtilisateurByMailU($_SESSION['mailU']);
 
-        $mesRestosAimes = getRestosAimesByMailU($mailU);
+        $mesRestosAimes = getRestosAimesByMailU($_SESSION['mailU']);
 
-        $mesTypeCuisineAimes = getTypesCuisinePreferesByMailU($mailU);
+        $mesTypeCuisineAimes = getTypesCuisinePreferesByMailU($_SESSION['mailU']);
+
+        require('vue/vueMonProfil.php');
     } else {
         header("Location: ./?action=showLogin");
     }
