@@ -1,7 +1,7 @@
 <?php
 
-include_once "{$GLOBALS['racine']}/modele/bd.resto.inc.php";
-include_once "{$GLOBALS['racine']}/modele/bd.critiquer.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.resto.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.critiquer.inc.php";
 
 
 function addCritique(){
@@ -10,8 +10,12 @@ function addCritique(){
     $commentaire = htmlspecialchars($_POST['commentaire']);
     $idR = filter_input(INPUT_POST, 'idR', FILTER_SANITIZE_NUMBER_INT);
 
+    if($note == null || $idR == null){
+        return;
+    }
+
     ajouterCritique($idR, $_SESSION['mailU'], $note, $commentaire);
-    header("Location: index.php?action=restaurant&idR=$idR");
+    header("Location: index.php?action=showRestaurant&idR=$idR");
 }
 
 function delCritique(){
@@ -19,7 +23,7 @@ function delCritique(){
     $idR = filter_input(INPUT_GET, 'idR', FILTER_SANITIZE_NUMBER_INT);
     
     supprimerCritique($idR, $_SESSION['mailU']);
-    header("Location: index.php?action=restaurant&idR=$idR");
+    header("Location: index.php?action=showRestaurant&idR=$idR");
 }
 
 function editCritique(){
@@ -29,5 +33,5 @@ function editCritique(){
     $mailU = filter_input(INPUT_POST, 'mailU', FILTER_SANITIZE_EMAIL);
     
     modifierCritique($note, $commentaire, $idR, $_SESSION['mailU']);
-    header("Location: index.php?action=restaurant&idR=$idR");
+    header("Location: index.php?action=showRestaurant&idR=$idR");
 }

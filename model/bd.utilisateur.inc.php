@@ -16,6 +16,9 @@ function getUtilisateurs() {
         }
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
+
+        addFailedJobsIntoTable($cnx, $e->getMessage(), "SELECT * FROM utilisateur", $e->getMessage());
+        throwError("SQL EXCEPTION", "Une erreur est survenue lors de la récupération des utilisateurs\n{$e->getMessage()}", 500);
         die();
     }
     return $resultat;
@@ -131,15 +134,14 @@ function unbanUser($mailU){
         $cnx = connexionPDO();
         $req = $cnx->prepare("update utilisateur set is_banned = 0 where mailU=:mailU");
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
-        $req->execute();
-        
-        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+        $result = $req->execute();
+
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
         die();
     }
     
-    return $resultat["rangU"];
+    return $result;
 }
 
 function updatePassword($mailU, $mdp){
@@ -149,15 +151,14 @@ function updatePassword($mailU, $mdp){
         $req = $cnx->prepare("update utilisateur set mdpU = :mdpU where mailU=:mailU");
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':mdpU', $mdpUCrypt, PDO::PARAM_STR);
-        $req->execute();
+        $resultat = $req->execute();
         
-        $resultat = $req->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
         die();
     }
     
-    return $resultat["rangU"];
+    return $resultat;
 }
 
 function updateUsername($mailU, $pseudo){
@@ -166,15 +167,13 @@ function updateUsername($mailU, $pseudo){
         $req = $cnx->prepare("UPDATE utilisateur set pseudoU = :pseudoU where mailU=:mailU");
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':pseudoU', $pseudo, PDO::PARAM_STR);
-        $req->execute();
-        
-        $resultat = $req->fetch(PDO::FETCH_ASSOC);
+        $resultat = $req->execute();
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
         die();
     }
     
-    return $resultat["rangU"];
+    return $resultat;
 }
 
 function updateEmail($mailU, $newMail){
@@ -183,17 +182,44 @@ function updateEmail($mailU, $newMail){
         $req = $cnx->prepare("UPDATE utilisateur set mailU = :newMail where mailU=:mailU");
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':newMail', $newMail, PDO::PARAM_STR);
-        $req->execute();
+        $result = $req->execute();
         
-        $resultat = $req->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
         die();
     }
     
-    return $resultat["rangU"];
+    return $result;
 }
 
+function updateRank($mailU, $userRang){
+    // check if userrang exists in userRang table
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("SELECT * FROM userrang WHERE id = :userRang");
+        $req->bindValue(':userRang', $userRang, PDO::PARAM_INT);
+        $req->execute();
+        $result = $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+
+    // if result == true, update user rank
+    if ($result) {
+        try {
+            $cnx = connexionPDO();
+            $req = $cnx->prepare("UPDATE utilisateur set rangU = :userRang where mailU=:mailU");
+            $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+            $req->bindValue(':userRang', $userRang, PDO::PARAM_INT);
+            $result = $req->execute();
+            
+        } catch (PDOException $e) {
+            print "Erreur !: " . $e->getMessage();
+            die();
+        }
+    }
+}
 
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
     // prog principal de test

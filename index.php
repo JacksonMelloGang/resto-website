@@ -1,7 +1,7 @@
 <?php
 include "getRacine.php";
-include "$racine/controleur/controleurPrincipal.php";
-include_once "$racine/modele/authentification.inc.php"; // pour pouvoir utiliser isLoggedOn()
+include "$racine/controller/controleurPrincipal.php";
+include_once "$racine/model/authentification.inc.php"; // pour pouvoir utiliser isLoggedOn()
 session_start();
 
 if (isset($_GET["action"])) {
@@ -21,7 +21,7 @@ if (isset($_GET["action"])) {
  * 2: function name
 */
 $route = controleurPrincipal($action); 
-require_once "$racine\\controleur\\$route[0].php";
+require_once "$racine\\controller\\$route[0].php";
 
 
 if($route[0] == "errorController"){

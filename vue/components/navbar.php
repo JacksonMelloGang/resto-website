@@ -5,8 +5,8 @@
         </div>
         <ul>
             <li><a href="?action=home">Accueil</a></li>
-            <li><a href="?action=restaurants">Restaurants</a></li>
-            <li><a href="?action=menus">Menu</a></li>
+            <li><a href="?action=showRestaurants">Restaurants</a></li>
+            <li><a href="?action=showMenus">Menu</a></li>
 
 
             <!--<li><a href="/contact.html">Connexion</a></li>-->

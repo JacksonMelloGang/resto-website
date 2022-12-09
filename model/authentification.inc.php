@@ -1,6 +1,7 @@
 <?php
 
 include_once "bd.utilisateur.inc.php";
+include_once "{$GLOBALS['racine']}/database/jobs.php";
 
 function login($mailU, $mdpU) {
     if (!isset($_SESSION)) {
@@ -10,6 +11,11 @@ function login($mailU, $mdpU) {
     $util = getUtilisateurByMailU($mailU);
     if($util === false){
         // couldn't find user in database
+        return false;
+    }
+
+    if(isBanned($mailU)){
+        // user is banned
         return false;
     }
 
@@ -60,4 +66,4 @@ function isLoggedOn() {
     }
     return $ret;
 }
-?>
+

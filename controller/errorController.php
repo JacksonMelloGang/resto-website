@@ -1,12 +1,7 @@
 <?php
-
-if ( $_SERVER["SCRIPT_FILENAME"] == __FILE__ ){
-    $racine="..";
-}
-
 function throwError($error, $errormessage, $errorcode=405){
     http_response_code($errorcode);
-
+    $title = "Resto - Error";
 
     include "{$GLOBALS['racine']}/vue/vueError.php";
 }

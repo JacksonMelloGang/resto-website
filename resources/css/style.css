@@ -9,6 +9,7 @@ body {
     margin: auto;
     display: flex;
     /*flex-direction: row;*/
+    height: 100%;
 }
 
 
@@ -25,7 +26,7 @@ body {
 
 nav {
     width: 10%;
-    /*height: 100vh;*/
+    /*height: auto;*/
 
     position: sticky;
     top: 0;
@@ -73,13 +74,15 @@ nav {
 }
 
 .container {
-    width: 90%;
+    width: 100vw;
     height: 100%;
     background-color: rgb(255, 255, 255);
     
     display: flex;
     align-items: center;
     flex-direction: column;
+
+
 }
 
 
@@ -304,7 +307,7 @@ footer {
     height: 15vh;
     padding-top: 10px;
     padding-bottom: 10px;
-
+    margin-top: end;
 
     display: flex;
     align-items: center;

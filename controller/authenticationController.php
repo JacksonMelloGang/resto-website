@@ -1,11 +1,10 @@
 <?php
 // INCLUDE MODELE
-include_once "{$GLOBALS['racine']}/modele/bd.utilisateur.inc.php";
-include "{$GLOBALS['racine']}/controleur/errorController.php";
+include_once "{$GLOBALS['racine']}/model/bd.utilisateur.inc.php";
+include "{$GLOBALS['racine']}/controller/errorController.php";
 
 function showLogin($msg = ""){
-    $title = "Login";
-    $content = "login";
+    $title = "Se connecter";
 
     require "vue/vueLogin.php";
 }
@@ -14,7 +13,8 @@ function connect(){
     $http_method = $_SERVER['REQUEST_METHOD'];
     if($http_method != "POST"){
         // abort with error code
-        return throwError("Erreur 405", "HTTP method not allowed", 405);
+        throwError("Erreur 405", "HTTP method not allowed", 405);
+        return;
     }
 
     // init empty value
@@ -27,14 +27,15 @@ function connect(){
 
     // check if both are null
     if($mailU == null || $mdpU == null){
+        showLogin("Veuillez remplir tous les champs");
         return;
     }
 
     // attempt login
     $result = login($mailU, $mdpU);
 
-    if($result == true){
-        header("Location: index.php?action=restaurants");
+    if($result){
+        header("Location: index.php?action=showRestaurants");
     } else {
         showLogin("Erreur lors de la connexion, Invalid username or password");
     }
@@ -48,8 +49,6 @@ function disconnect(){
 
 function showRegister($msg = ""){
     $title = "Register";
-    $content = "register";
-    $msg = $msg;
 
     require "vue/vueRegister.php";
 }
@@ -79,6 +78,12 @@ function register(){
         return;
     }
 
+    // validate with regex email
+    if(!filter_var($mailU, FILTER_VALIDATE_EMAIL)){
+        showRegister("Veuillez entrer une adresse mail valide");
+        return;
+    }
+
     // attempt register
     $result = addUtilisateur($mailU, $mdpU, $pseudoU, 1);
     login($mailU, $mdpU);
@@ -87,5 +92,5 @@ function register(){
         showRegister("Erreur lors de l'inscription");
         return;
     }
-    header("Location: index.php?action=restaurants");
+    header("Location: index.php?action=showRestaurants");
 }

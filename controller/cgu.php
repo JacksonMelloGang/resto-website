@@ -29,9 +29,9 @@ $menuBurger[] = Array("url"=>"#bila","label"=>"Bilan des fonctionnalités");
 
 // appel du script de vue qui permet de gerer l'affichage des donnees
 $titre = "r3st0.fr - Conditions générales d'utilisations";
-include "$racine/vue/entete.html.php";
-include "$racine/vue/vueCgu.php";
-include "$racine/vue/pied.html.php";
+include "{$GLOBALS['racine']}/vue/entete.html.php";
+include "{$GLOBALS['racine']}/vue/vueCgu.php";
+include "{$GLOBALS['racine']}/vue/pied.html.php";
 
 
 ?>

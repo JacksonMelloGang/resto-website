@@ -19,13 +19,13 @@ include("components/search_popup.php");
             ?>
             <div class="card">
                 <div class="photoCard">
-                    <img src="/photos/<?= $restostendance[$i]["cheminP"] ?>" alt="Photo du restaurant">
+                    <img src="resources/photos/<?= $restostendance[$i]["cheminP"] ?>" alt="Photo du restaurant">
                 </div>
 
                 <div class="descrCard">
                     <h2><?= $restostendance[$i]["nomR"] ?></h2>
                     <p><?= $restostendance[$i]["descR"] ?></p>
-                    <a href="?action=restaurant&idR=<?= $restostendance[$i]["idR"] ?>">Voir plus</a>
+                    <a href="?action=showRestaurant&idR=<?= $restostendance[$i]["idR"] ?>">Voir plus</a>
                 </div>
             </div>
             <?php
@@ -52,13 +52,13 @@ include("components/search_popup.php");
             ?>
             <div class="card">
                 <div class="photoCard">
-                    <img src="photos/<?= $photo["cheminP"]?>" alt="Photo du restaurant">
+                    <img src="resources/photos/<?= $photo["cheminP"]?>" alt="Photo du restaurant">
                 </div>
 
                 <div class="descrCard">
                     <h2><?= $resto["nomR"] ?></h2>
                     <p><?= $resto["descR"] ?></p>
-                    <a href="?action=restaurant&idR=<?= $resto["idR"] ?>">Voir plus</a>
+                    <a href="?action=showRestaurant&idR=<?= $resto["idR"] ?>">Voir plus</a>
                 </div>
             </div>
             <?php

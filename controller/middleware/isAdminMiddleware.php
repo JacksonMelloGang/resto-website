@@ -1,13 +1,14 @@
 <?php
 
-require_once "modele\authentification.inc.php";
+require_once "model\authentification.inc.php";
 
 function isAdmin(){
     $cnx = connexionPDO(); // get pdo connexionPDO()
-
+    $mailU = getMailULoggedOn();
+    
     // get user
     $req = $cnx->prepare("SELECT * FROM utilisateur WHERE mailU = :mailU");
-    $req->bindParam(':mailU', getMailULoggedOn());
+    $req->bindParam(':mailU', $mailU);
     $req->execute();
 
     $user = $req->fetch(PDO::FETCH_ASSOC);

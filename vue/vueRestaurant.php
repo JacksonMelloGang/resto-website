@@ -25,10 +25,10 @@ include("components/search_popup.php");
     <?php for ($i = 1; $i <= 5; $i++) { ?>
         <a class="aimer" href="./?action=noter&note=<?= $i ?>&idR=<?= $unResto['idR']; ?>" >
             <?php if ($i <= $noteMoy) { ?>
-                <img class="note" src="images/like.png" alt="">
+                <img class="note" src="resources/img/like.png" alt="">
             <?php } else {
                 ?>
-                <img class="note" src="images/neutre.png" alt="line neutre">
+                <img class="note" src="resources/img/neutre.png" alt="line neutre">
             <?php } ?>
         </a>
     <?php } ?>
@@ -37,7 +37,7 @@ include("components/search_popup.php");
 
 <!-- RESTO INFO CONTENT -->
 <div style="display: flex; flex-direction: row;justify-content:center;text-align:center;width:70%;border: black 2px solid;border-radius:5px;">
-    <img src="photos/<?= $lesPhotos[0]["cheminP"]; ?>" alt="image du restaurant" style="width: 50%; object-fit: contain;">
+    <img src="resources/photos/<?= $lesPhotos[0]["cheminP"]; ?>" alt="image du restaurant" style="width: 50%; object-fit: contain;">
     <div style="display:flex; flex-direction: column; text-align: center;width:70%;margin-left:10px;">
         <h2>Adresse</h2>
         <p><?php printf("%s, %s - %s, %s", $unResto['cpR'], $unResto['villeR'], $unResto['numAdrR'], $unResto['voieAdrR']); ?></p>
@@ -70,7 +70,7 @@ include("components/search_popup.php");
             <div class="slide-track">
                 <?php 
                     for ($i = 0; $i < count($lesPhotos); $i++) { 
-                        echo("<div class='slide'> <img class='galerie' src='photos/". $lesPhotos[$i]["cheminP"] . "' alt='' /></div>");
+                        echo("<div class='slide'> <img class='galerie' src='resources/photos/". $lesPhotos[$i]["cheminP"] . "' alt='' /></div>");
                     } 
                 ?>
             </div>
@@ -81,9 +81,9 @@ include("components/search_popup.php");
 
     <?php if(isLoggedOn()){ ?>
         <?php if ($aimer !== false) { ?>
-            <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aime.png" alt="j'aime ce restaurant"></a>
+            <a href="./?action=aimerRestaurant&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="resources/img/aime.png" alt="j'aime ce restaurant"></a>
         <?php } else { ?>
-            <a href="./?action=aimer&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="images/aimepas.png" alt="je n'aime pas encore ce restaurant"></a>
+            <a href="./?action=aimerRestaurant&idR=<?= $unResto['idR']; ?>" ><img class="aimer" src="resources/img/aimepas.png" alt="je n'aime pas encore ce restaurant"></a>
         <?php } ?>
 
     <?php } ?>
@@ -111,16 +111,16 @@ include("components/search_popup.php");
                         <span style="position:relative;margin-right:auto !important">
                             <?php
                                 if($critiques[$i]["mailU"] == $mailU){
-                                    echo "<a href='./?action=supprimerCritique&idR=".$critiques[$i]["idR"]."'>Supprimer</a>";
+                                    echo "<a href='./?action=delCritique&idR=".$critiques[$i]["idR"]."'>Supprimer</a>";
                                 }
                             ?>
                         </span>
                     </div>
 
                 </div>
-            <?php } 
+            <?php }
 
-            if(isLoggedOn() && $hasAlreadyCommented == false){?>
+            if(isLoggedOn() && !$hasAlreadyCommented){?>
                 <h2 id="crit">Ajouter une critique</h2>
                     <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
                 <form action="./?action=addCritique" method="post">
@@ -143,7 +143,7 @@ include("components/search_popup.php");
                     <input style="margin-top: 10px" type="submit" value="Ajouter">
                 </form>
             </div>                
-            <?php } else if($hasAlreadyCommented == false) { ?>
+            <?php } else if(!isLoggedOn()) { ?>
                 <br>
                 <a href="index.php?action=showLogin">Envie de commenter ? Connecte toi</a>             
             <?php } ?> 

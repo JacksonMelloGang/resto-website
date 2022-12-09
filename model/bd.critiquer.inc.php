@@ -93,6 +93,27 @@ function modifierCritique($idR, $mailU, $note, $commentaire) {
     }
 }
 
+function getCritiques(){
+    $resultat = array();
+
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("select critiquer.*, utilisateur.pseudoU from critiquer, utilisateur where critiquer.mailU = utilisateur.mailU");
+
+        $req->execute();
+
+        $ligne = $req->fetch(PDO::FETCH_ASSOC);
+        while ($ligne) {
+            $resultat[] = $ligne;
+            $ligne = $req->fetch(PDO::FETCH_ASSOC);
+        }
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+    return $resultat;
+}
+
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
     // prog principal de test
     header('Content-Type:text/plain');

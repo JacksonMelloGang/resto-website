@@ -11,8 +11,23 @@ function controleurPrincipal($action) {
 
     $registered_routes = array(
         "home" => "homeController",
-        "restaurants" => "restaurantController",
-        "restaurant" => "restaurantController",
+        "showRestaurants" => "restaurantController",
+        "showRestaurant" => "restaurantController",
+
+        // menu controller
+        "showMenus" => "menuController",
+        "showMenu" => "menuController",
+        "showMenuByType" => "menuController",
+        "showMenuByTypeAndResto" => "menuController",
+        "showMenuByResto" => "menuController",
+
+        // plat controller
+        "showPlats" => "platController",
+        "showPlat" => "platController",
+        "showPlatByType" => "platController",
+        "showPlatByTypeAndResto" => "platController",
+        "showPlatByResto" => "platController",
+
 
         // critique Controller
         "addCritique" => "critiqueController",
@@ -20,13 +35,19 @@ function controleurPrincipal($action) {
         "editCritique" => "critiqueController",
 
 
-
+        // user controller
         "monProfil" => "utilisateurController",
         "userProfil" => "utilisateurController", // see others profiles in condition that they are not private
+        "editPassword" => "utilisateurController",
+        "editUsername" => "utilisateurController",
+
         "updateUserProfil" => "utilisateurController",
         "updateUserPassword" => "utilisateurController",
         "updateUserMail" => "utilisateurController",
-        "aimer" => "aimerController",
+        "updatePseudo" => "utilisateurController",
+
+        // aimer controller
+        "aimerRestaurant" => "aimerController",
 
 
         // Authentication Controller
@@ -59,21 +80,23 @@ function controleurPrincipal($action) {
         "missingFunction" => "errorController",
         "missingRoute" => "errorController",
         "missingModele" => "errorController",
-        "missingVue" => "errorController"
+        "missingVue" => "errorController",
+
+        "test" => "testController",
     );
 
     // if route is registered
     if(array_key_exists($action, $registered_routes)){
         
         // check if file exists
-        if(file_exists_in_folder("controleur", $registered_routes[$action] . ".php") == false){
+        if(!file_exists_in_folder("controller", $registered_routes[$action] . ".php")){
             // file not exists
             return array("errorController", "missingController", $registered_routes[$action]);
         }
 
 
         // require controller
-        require("controleur\\" . $registered_routes[$action] . ".php");
+        require("controller\\" . $registered_routes[$action] . ".php");
 
         if(function_exists($action)){
             // controller and function exist - normal operation
@@ -104,6 +127,14 @@ function get_controller($action) {
     }
 }
 
+function call_route($controller, $method){
+// check if method is registered in route, if not, return error
+    if(get_controller($method) == $controller){
+        return call_user_func($method);
+    } else {
+        /*return call_user_func("error404");*/
+    }
+}
 
 function file_exists_in_folder($folder, $file) {
     $files = scandir($folder);

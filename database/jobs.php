@@ -1,5 +1,5 @@
 <?php
-require_once "modele\authentification.inc.php";
+require_once "model\authentification.inc.php";
 
 function addFailedJobsIntoTable($connection, $queue, $payload, $exception){
     $sql = "INSERT INTO failed_jobs (connection, queue, payload, exception) VALUES (:connection, :queue, :payload, :exception)";
@@ -9,6 +9,8 @@ function addFailedJobsIntoTable($connection, $queue, $payload, $exception){
     $stmt->bindParam(':queue', $queue);
     $stmt->bindParam(':payload', $payload);
     $stmt->bindParam(':exception', $exception);
-    $stmt->execute();
+    $result = $stmt->execute();
+
+    return $result;
 }
     

@@ -1,13 +1,13 @@
 <?php
 
-include_once "{$GLOBALS['racine']}/modele/bd.resto.inc.php";
-include_once "{$GLOBALS['racine']}/modele/bd.typecuisine.inc.php";
-include_once "{$GLOBALS['racine']}/modele/bd.photo.inc.php";
-include_once "{$GLOBALS['racine']}/modele/bd.critiquer.inc.php";
-include_once "{$GLOBALS['racine']}/modele/bd.aimer.inc.php";
-include_once "{$GLOBALS['racine']}/modele/authentification.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.resto.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.typecuisine.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.photo.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.critiquer.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.aimer.inc.php";
+include_once "{$GLOBALS['racine']}/model/authentification.inc.php";
 
-function restaurants(){
+function showRestaurants(){
     $title = "Liste Des Restaurants";
     $restostendance = getRestoTendance(5);
     $restos = getRestos();
@@ -16,7 +16,7 @@ function restaurants(){
     include("{$GLOBALS['racine']}/vue/vueRestaurants.php");    
 }
 
-function restaurant(){
+function showRestaurant(){
     $idR = filter_input(INPUT_GET, 'idR', FILTER_SANITIZE_NUMBER_INT);
 
     $unResto = getRestoByIdR($idR);
@@ -44,6 +44,7 @@ function restaurant(){
         }
     }
 
+    $title = "Resto - {$unResto['nomR']}";
     // show page
     include("{$GLOBALS['racine']}/vue/vueRestaurant.php");
 }

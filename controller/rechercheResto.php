@@ -1,10 +1,7 @@
 <?php
-if ( $_SERVER["SCRIPT_FILENAME"] == __FILE__ ){
-    $racine="..";
-}
-include_once "$racine/modele/bd.resto.inc.php";
-include_once "$racine/modele/bd.typecuisine.inc.php";
-include_once "$racine/modele/bd.photo.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.resto.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.typecuisine.inc.php";
+include_once "{$GLOBALS['racine']}/model/bd.photo.inc.php";
 
 // creation du menu burger
 $menuBurger = array();
@@ -64,13 +61,13 @@ switch($critere){
 
 // appel du script de vue qui permet de gerer l'affichage des donnees
 $titre = "Recherche d'un restaurant";
-include "$racine/vue/entete.html.php";
-include "$racine/vue/vueRechercheResto.php";
+include "{$GLOBALS['racine']}/vue/entete.html.php";
+include "{$GLOBALS['racine']}/vue/vueRechercheResto.php";
 if (!empty($_POST)) {
     // affichage des resultats de la recherche
-    include "$racine/vue/vueResultRecherche.php";
+    include "{$GLOBALS['racine']}/vue/vueResultRecherche.php";
 }
-include "$racine/vue/pied.html.php";
+include "{$GLOBALS['racine']}/vue/pied.html.php";
 
 
 ?>

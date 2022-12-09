@@ -19,8 +19,7 @@
             <?php include("vue/components/footer.php") ?>
         </div>
 
-
-
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-EwYxjbFmeccW8uOnGR4dB6_wKkbZaQE&libraries=places"></script>
     </body>
 </html>
+

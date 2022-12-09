@@ -1,6 +1,6 @@
 <?php
 
-require_once "modele\authentification.inc.php";
+require_once "model\authentification.inc.php";
 
 function getMenusFromIdR($idR){
     $cnx = connexionPDO(); // get pdo connexionPDO()
@@ -25,6 +25,18 @@ function getMenus(){
     return $menus;
 }
 
+function getMenu($idM){
+    $cnx = connexionPDO(); // get pdo connexionPDO()
+
+    $req = $cnx->prepare("SELECT * FROM menu WHERE idM = :idM");
+    $req->bindParam(':idM', $idM);
+    $req->execute();
+
+    $menu = $req->fetch(PDO::FETCH_ASSOC);
+
+    return $menu;
+}
+
 function addMenu($nomM, $descM, $prixM, $idR){
     $cnx = connexionPDO(); // get pdo connexionPDO()
 
@@ -41,5 +53,17 @@ function deleteMenu($idM){
 
     $req = $cnx->prepare("DELETE FROM menu WHERE idM = :idM");
     $req->bindParam(':idM', $idM);
+    $req->execute();
+}
+
+function updateMenu($idM, $nomM, $descM, $prixM, $idR){
+    $cnx = connexionPDO(); // get pdo connexionPDO()
+
+    $req = $cnx->prepare("UPDATE menu SET nomM = :nomM, descM = :descM, prixM = :prixM, idR = :idR WHERE idM = :idM");
+    $req->bindParam(':idM', $idM);
+    $req->bindParam(':nomM', $nomM);
+    $req->bindParam(':descM', $descM);
+    $req->bindParam(':prixM', $prixM);
+    $req->bindParam(':idR', $idR);
     $req->execute();
 }

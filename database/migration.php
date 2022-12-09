@@ -1,8 +1,8 @@
 <?php
 
-require_once "modele\authentification.inc.php";
+require_once "model\authentification.inc.php";
 
-function setup_table(){
+function migrate(){
     $cnx = connexionPDO(); // get pdo connexionPDO()
 
 
@@ -15,7 +15,7 @@ function setup_table(){
 
     // typecuisine table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS typecuisine(
-        idTC INT AUTO_INCREMENT PRIMARY KEY,
+        id INT AUTO_INCREMENT PRIMARY KEY,
         libelle VARCHAR(255) NOT NULL
     )");
     $req->execute();
@@ -28,6 +28,7 @@ function setup_table(){
         pseudoU VARCHAR(255) NOT NULL,
         idUR INT NOT NULL,
         is_banned BOOLEAN NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT fk_idUR FOREIGN KEY (idUR) REFERENCES userrang(id)
     )");
     $req->execute();
@@ -43,7 +44,16 @@ function setup_table(){
         latitudeDegR INT,
         latitudeMinR INT,
         descR VARCHAR(255) NOT NULL,
-        horaireR VARCHAR(255) NOT NULL
+        horaireR VARCHAR(255) NOT NULL,
+        added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+    $req->execute();
+
+    $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS posseder_resto(
+        mailU VARCHAR(255) NOT NULL,
+        idR INT NOT NULL,
+        CONSTRAINT fk_mailU FOREIGN KEY (mailU) REFERENCES utilisateur(mailU),
+        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)    
     )");
     $req->execute();
 
@@ -52,13 +62,17 @@ function setup_table(){
         idP INT AUTO_INCREMENT PRIMARY KEY,
         cheminP VARCHAR(255) NOT NULL,
         idR INT NOT NULL,
+        uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)
     )");
+    $req->execute();
 
     // aimer table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS aimer(
-        idR PRIMARY KEY,
-        mailU PRIMARY KEY,
+        idR INT NOT NULL,
+        mailU VARCHAR(150) NOT NULL,
+        liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT pk_idR_mailU PRIMARY KEY (idR, mailU),
         CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR),
         CONSTRAINT fk_idU FOREIGN KEY (mailU) REFERENCES utilisateur(mailU)
     )");
@@ -66,10 +80,11 @@ function setup_table(){
 
     // critiquer table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS critiquer(
-        idR PRIMARY KEY,
-        mailU PRIMARY KEY,
+        idR INT NOT NULL,
+        mailU INT NOT NULL,
         note INT,
         commentaire VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR),
         CONSTRAINT fk_idU FOREIGN KEY (mailU) REFERENCES utilisateur(mailU)
     )");
@@ -82,6 +97,7 @@ function setup_table(){
         descM VARCHAR(255) NOT NULL,
         prixM INT NOT NULL,
         idR INT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)
     )");
     $req->execute();
@@ -91,9 +107,12 @@ function setup_table(){
         idP INT AUTO_INCREMENT PRIMARY KEY,
         nomP VARCHAR(255) NOT NULL,
         descP VARCHAR(255) NOT NULL,
-        prixP INT NOT NULL,
+        prixP NUMERIC(5,2) NOT NULL,
         idM INT NOT NULL,
-        CONSTRAINT fk_idM FOREIGN KEY (idM) REFERENCES menu(idM)
+        idR INT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT fk_idM FOREIGN KEY (idM) REFERENCES menu(idM),
+        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)                               
     )");
     $req->execute();
 
@@ -107,6 +126,5 @@ function setup_table(){
         exception LONGTEXT NOT NULL,
         failed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
+    $req->execute();
 }
-
-?>

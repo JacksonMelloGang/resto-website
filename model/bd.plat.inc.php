@@ -1,6 +1,6 @@
 <?php
 
-require_once "modele\authentification.inc.php";
+require_once "model\authentification.inc.php";
 
 function getPlatsFromidR($idR){
     $cnx = connexionPDO(); // get pdo connexionPDO()
@@ -23,6 +23,18 @@ function getPlats(){
     $plats = $req->fetchAll(PDO::FETCH_ASSOC);
 
     return $plats;
+}
+
+function getPlat($idP){
+    $cnx = connexionPDO(); // get pdo connexionPDO()
+
+    $req = $cnx->prepare("SELECT * FROM plat WHERE idP = :idP");
+    $req->bindParam(':idP', $idP);
+    $req->execute();
+
+    $plat = $req->fetch(PDO::FETCH_ASSOC);
+
+    return $plat;
 }
 
 function addPlat($nomP, $descP, $prixP, $idR){

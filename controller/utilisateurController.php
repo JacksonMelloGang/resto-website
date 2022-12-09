@@ -1,13 +1,13 @@
 <?php
 
-require_once "{$GLOBALS['racine']}\modele\authentification.inc.php";
-require_once "{$GLOBALS['racine']}\modele\bd.utilisateur.inc.php";
-require_once "{$GLOBALS['racine']}\modele\bd.resto.inc.php";
-require_once "{$GLOBALS['racine']}\modele\bd.typecuisine.inc.php";
+require_once "{$GLOBALS['racine']}\model\authentification.inc.php";
+require_once "{$GLOBALS['racine']}\model\bd.utilisateur.inc.php";
+require_once "{$GLOBALS['racine']}\model\bd.resto.inc.php";
+require_once "{$GLOBALS['racine']}\model\bd.typecuisine.inc.php";
 
 
 function monProfil(){
-    if (isLoggedOn()) {
+    if (isLoggedOn()){
         $mailU = getMailULoggedOn();
         $util = getUtilisateurByMailU($_SESSION['mailU']);
 
@@ -15,6 +15,7 @@ function monProfil(){
 
         $mesTypeCuisineAimes = getTypesCuisinePreferesByMailU($_SESSION['mailU']);
 
+        $title = "Mon profil";
         require('vue/vueMonProfil.php');
     } else {
         header("Location: ./?action=showLogin");
@@ -22,8 +23,30 @@ function monProfil(){
 
 }
 
+function editPassword($msg = ""){
+    if (isLoggedOn()){
+        $title = "Modifier mon mot de passe";
+
+        require('vue/vueEditPassword.php');
+    } else {
+        header("Location: ./?action=showLogin");
+    }
+}
+
+function editUsername($msg = ""){
+    if (isLoggedOn()){
+        $title = "Modifier mon pseudo";
+        $pseudo = getUtilisateurByMailU($_SESSION['mailU'])['pseudoU'];
+
+        require('vue/vueEditUsername.php');
+    } else {
+        header("Location: ./?action=showLogin");
+    }
+}
+
+
+
 function updateUserProfil(){
-    
 
 }
 
@@ -35,6 +58,11 @@ function updateUserPassword(){
         throwError("Erreur 405", "HTTP method not allowed", 405);
     }
 
+    // check if user is logged on
+    if(!isLoggedOn()){
+        header("Location: ./?action=showLogin");
+    }
+
     // init empty value
     $mdpU = "";
 
@@ -44,15 +72,23 @@ function updateUserPassword(){
 
     // check if both are null
     if($mdpU == null || $mdpU2 == null){
+        editPassword("Veuillez remplir tous les champs");
         return;
     }
 
+    // check if both are equal
     if($mdpU != $mdpU2){
+        editPassword("Les mots de passe ne correspondent pas");
         return;
     }
 
     // attempt update
     $result = updatePassword($_SESSION["mailU"], $mdpU);
+    if($result){
+        header("Location: ./?action=monProfil");
+    } else {
+        editPassword("Erreur lors de la modification du mot de passe");
+    }
 }
 
 function updateUserMail(){
@@ -61,6 +97,11 @@ function updateUserMail(){
     if($http_method != "POST"){
         // abort with error code
         throwError("Erreur 405", "HTTP method not allowed", 405);
+    }
+
+    if(!isLoggedOn()){
+        header("Location: ./?action=showLogin");
+        return;
     }
 
     // init empty value
@@ -76,6 +117,11 @@ function updateUserMail(){
 
     // attempt update
     $result = updateEmail($_SESSION["mailU"], $mailU);
+
+    // update mail in session if update was successful
+    if($result !== false){
+        $_SESSION["mailU"] = $mailU;
+    }
 }
 
 function updatePseudo(){
@@ -84,6 +130,12 @@ function updatePseudo(){
     if($http_method != "POST"){
         // abort with error code
         throwError("Erreur 405", "HTTP method not allowed", 405);
+        return;
+    }
+
+    if(!isLoggedOn()){
+        header("Location: ./?action=showLogin");
+        return;
     }
 
     // init empty value
@@ -94,9 +146,14 @@ function updatePseudo(){
 
     // check if both are null
     if($pseudoU == null){
-        return;
+        editUsername("Veuillez remplir tous les champs");
     }
 
     // attempt update
     $result = updateUsername($_SESSION["mailU"], $pseudoU);
+    if($result === false){
+        editUsername("Impossible de modifier le pseudo");
+    } else {
+        editUsername("Votre pseudo a bien été modifié");
+    }
 }

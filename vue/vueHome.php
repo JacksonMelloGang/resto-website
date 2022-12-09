@@ -15,7 +15,7 @@
     <div style="display:flex;justify-content:center;align-items:center;height:100vh">
         <div id="card" style="background-color: rgb(45, 45, 45);padding: 15px;border-radius:3px; justify-content:center;align-items:center;display:flex;flex-direction: column;height:15vh;">
             <h2 style="color:white;font-family: 'Roboto', sans-serif;">Resto - Le site de critiques de restaurants</h2>
-            <a style="font-family: 'Roboto', sans-serif;margin-top: 10px;padding: 10px; background-color: rgb(46, 94, 170); text-decoration: none; color: white; border-radius: 3px " href="?action=restaurants" class="btn btn-primary">Voir les restaurants</a>
+            <a style="font-family: 'Roboto', sans-serif;margin-top: 10px;padding: 10px; background-color: rgb(46, 94, 170); text-decoration: none; color: white; border-radius: 3px " href="?action=showRestaurants" class="btn btn-primary">Voir les restaurants</a>
         </div>
     </div>
 

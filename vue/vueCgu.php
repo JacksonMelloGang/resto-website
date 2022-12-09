@@ -10,7 +10,7 @@
 </p>
 <p>
     Responsable technique application : <span>Lionel Romain</span><br />
-    Responsable technique hebergement : <span>Ewen Prigent</span><br />
+    Responsable technique hébergement : <span>Ewen Prigent</span><br />
     Contact administratif du site : <span>Christophe Fontaine</span>
 </p>
 
@@ -138,4 +138,3 @@ Dans les commentaires peuvent être évalués :
     </table>
 </div>
 
-</div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 02, 2022 at 11:58 AM
+-- Generation Time: Dec 09, 2022 at 03:56 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -81,7 +81,6 @@ INSERT INTO `critiquer` (`idR`, `mailU`, `note`, `commentaire`) VALUES
 (1, 'jj.soueix@gmail.com', 3, 'moyen'),
 (1, 'mathieu.capliez@gmail.com', 3, 'Très bonne entrecote, les frites sont maisons et delicieuses.'),
 (1, 'nicolas.harispe@gmail.com', 4, 'Très bon accueil.'),
-(1, 'test@bts.sio', 4, '5/5 parce que j\'aime les entrecotes'),
 (1, 'yann@lechambon.fr', 5, NULL),
 (2, 'jj.soueix@gmail.com', 2, 'bof.'),
 (2, 'mathieu.capliez@gmail.com', 1, 'À éviter...'),
@@ -101,15 +100,35 @@ INSERT INTO `critiquer` (`idR`, `mailU`, `note`, `commentaire`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `failed_jobs`
+--
+
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `connection` varchar(255) NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menu`
 --
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE IF NOT EXISTS `menu` (
-  `id_menu` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_menu` varchar(50) NOT NULL,
-  `description` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_menu`)
+  `idM` int(11) NOT NULL AUTO_INCREMENT,
+  `nomM` varchar(255) NOT NULL,
+  `descM` varchar(255) NOT NULL,
+  `prixM` int(11) NOT NULL,
+  `idR` int(11) NOT NULL,
+  PRIMARY KEY (`idM`),
+  KEY `fk_idR` (`idR`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -156,11 +175,35 @@ INSERT INTO `photo` (`idP`, `cheminP`, `idR`) VALUES
 DROP TABLE IF EXISTS `plat`;
 CREATE TABLE IF NOT EXISTS `plat` (
   `idP` int(11) NOT NULL AUTO_INCREMENT,
-  `platName` varchar(50) NOT NULL,
-  `platDescription` varchar(50) NOT NULL,
+  `nomP` varchar(255) NOT NULL,
+  `descP` varchar(255) NOT NULL,
+  `prixP` int(11) NOT NULL,
   `idM` int(11) NOT NULL,
+  `idR` int(11) NOT NULL,
   PRIMARY KEY (`idP`),
-  KEY `fk_idMenu` (`idM`)
+  KEY `fk_idM` (`idM`),
+  KEY `fk_idR` (`idR`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `plat`
+--
+
+INSERT INTO `plat` (`idP`, `nomP`, `descP`, `prixP`, `idM`, `idR`) VALUES
+(1, 'abbb', 'aaa', 100, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posseder_resto`
+--
+
+DROP TABLE IF EXISTS `posseder_resto`;
+CREATE TABLE IF NOT EXISTS `posseder_resto` (
+  `mailU` varchar(255) NOT NULL,
+  `idR` int(11) NOT NULL,
+  KEY `fk_mailU` (`mailU`),
+  KEY `fk_idR` (`idR`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -242,34 +285,6 @@ INSERT INTO `proposer` (`idR`, `idTC`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `proposer_menu`
---
-
-DROP TABLE IF EXISTS `proposer_menu`;
-CREATE TABLE IF NOT EXISTS `proposer_menu` (
-  `idR` bigint(20) NOT NULL,
-  `idM` bigint(20) NOT NULL,
-  KEY `fk_idM` (`idM`),
-  KEY `fk_idR` (`idR`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `proposer_plat`
---
-
-DROP TABLE IF EXISTS `proposer_plat`;
-CREATE TABLE IF NOT EXISTS `proposer_plat` (
-  `idR` bigint(20) DEFAULT NULL,
-  `idP` int(11) DEFAULT NULL,
-  KEY `fk_idP` (`idP`),
-  KEY `fk_idR` (`idR`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `resto`
 --
 
@@ -343,9 +358,9 @@ INSERT INTO `typecuisine` (`idTC`, `libelleTC`) VALUES
 
 DROP TABLE IF EXISTS `userrang`;
 CREATE TABLE IF NOT EXISTS `userrang` (
-  `idrang` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `libelle` varchar(50) NOT NULL,
-  PRIMARY KEY (`idrang`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -360,6 +375,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `mdpU` varchar(50) DEFAULT NULL,
   `pseudoU` varchar(50) DEFAULT NULL,
   `rangU` int(11) DEFAULT NULL,
+  `is_banned` tinyint(1) NOT NULL,
   PRIMARY KEY (`mailU`),
   KEY `fk_rangU` (`rangU`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -368,16 +384,16 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Dumping data for table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`mailU`, `mdpU`, `pseudoU`, `rangU`) VALUES
-('aa@aa', 'seyvD1dYsFLbo', 'wuu', NULL),
-('alex.garat@gmail.com', '$1$zvN5hYSQSQDFUIQSdufUQSDFznHF5osT.', '@lex', NULL),
-('espriityt@gmai.com', 'sex6Ujc72DcYo', 'uwu', NULL),
-('jj.soueix@gmail.com', '$1$zvN5hYMI$SDFGSDFGJqJSDJF.', 'drskott', NULL),
-('mathieu.capliez@gmail.com', 'seSzpoUAQgIl.', 'pich', NULL),
-('michel.garay@gmail.com', '$1$zvN5hYMI$VSatLQ6SDFGdsfgznHF5osT.', 'Mitch', NULL),
-('nicolas.harispe@gmail.com', '$1$zvNDSFQSdfqsDfQsdfsT.', 'Nico40', NULL),
-('test@bts.sio', 'seSzpoUAQgIl.', 'testeur SIO', NULL),
-('yann@lechambon.fr', 'sej6dETYl/ea.', 'yann', NULL);
+INSERT INTO `utilisateur` (`mailU`, `mdpU`, `pseudoU`, `rangU`, `is_banned`) VALUES
+('aa@aa', 'seyvD1dYsFLbo', 'wuu', NULL, 0),
+('alex.garat@gmail.com', '$1$zvN5hYSQSQDFUIQSdufUQSDFznHF5osT.', '@lex', NULL, 0),
+('espriityt@gmai.com', 'sex6Ujc72DcYo', 'uwu', NULL, 0),
+('jj.soueix@gmail.com', '$1$zvN5hYMI$SDFGSDFGJqJSDJF.', 'drskott', NULL, 0),
+('mathieu.capliez@gmail.com', 'seSzpoUAQgIl.', 'pich', NULL, 0),
+('michel.garay@gmail.com', '$1$zvN5hYMI$VSatLQ6SDFGdsfgznHF5osT.', 'Mitch', NULL, 0),
+('nicolas.harispe@gmail.com', '$1$zvNDSFQSdfqsDfQsdfsT.', 'Nico40', NULL, 0),
+('test@bts.sio', 'seHRwdf0dTC9U', 'aaa', NULL, 0),
+('yann@lechambon.fr', 'sej6dETYl/ea.', 'yann', NULL, 0);
 
 --
 -- Constraints for dumped tables
@@ -421,7 +437,7 @@ ALTER TABLE `proposer`
 -- Constraints for table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD CONSTRAINT `fk_rangU` FOREIGN KEY (`rangU`) REFERENCES `userrang` (`idrang`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_rangU` FOREIGN KEY (`rangU`) REFERENCES `userrang` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
