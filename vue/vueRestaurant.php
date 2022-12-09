@@ -111,6 +111,7 @@ include("components/search_popup.php");
                         <span style="position:relative;margin-right:auto !important">
                             <?php
                                 if($critiques[$i]["mailU"] == $mailU){
+                                    echo "<a style='margin-right:10px;' href='./?action=showEditCritique&idR={$critiques[$i]["idR"]}'>Modifier</a>";
                                     echo "<a href='./?action=delCritique&idR=".$critiques[$i]["idR"]."'>Supprimer</a>";
                                 }
                             ?>
@@ -139,7 +140,6 @@ include("components/search_popup.php");
                     <br>
 
                     <input type="hidden" name="idR" value="<?= $unResto['idR'] ?> ">
-                    <input type="hidden" name="mailU" value="<?= $_SESSION["mailU"] ?> ">
                     <input style="margin-top: 10px" type="submit" value="Ajouter">
                 </form>
             </div>                

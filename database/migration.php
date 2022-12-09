@@ -8,114 +8,124 @@ function migrate(){
 
     // "categories" table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS userrang(
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        idrang INT AUTO_INCREMENT PRIMARY KEY,
         libelle VARCHAR(50) NOT NULL
     )");
     $req->execute();
 
     // typecuisine table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS typecuisine(
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        libelle VARCHAR(255) NOT NULL
+        idTC BIGINT AUTO_INCREMENT PRIMARY KEY,
+        libelleTC VARCHAR(255) NOT NULL
     )");
     $req->execute();
 
     // utilisateur table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS utilisateur(
-        idU INT AUTO_INCREMENT PRIMARY KEY,
-        mailU VARCHAR(255) NOT NULL,
+        mailU VARCHAR(150) NOT NULL PRIMARY KEY,
         mdpU VARCHAR(255) NOT NULL,
         pseudoU VARCHAR(255) NOT NULL,
-        idUR INT NOT NULL,
+        rangU INT NOT NULL,
         is_banned BOOLEAN NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT fk_idUR FOREIGN KEY (idUR) REFERENCES userrang(id)
+        CONSTRAINT fk_rangU FOREIGN KEY (rangU) REFERENCES userrang(idrang)
     )");
     $req->execute();
     
     // resto table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS resto(
-        idR INT AUTO_INCREMENT PRIMARY KEY,
-        nomR VARCHAR(255) NOT NULL,
-        numAdrR VARCHAR(255) NOT NULL,
-        voieAdrR VARCHAR(255) NOT NULL,
-        cpR VARCHAR(255) NOT NULL,
-        villeR VARCHAR(255) NOT NULL,
-        latitudeDegR INT,
-        latitudeMinR INT,
-        descR VARCHAR(255) NOT NULL,
-        horaireR VARCHAR(255) NOT NULL,
+        idR BIGINT AUTO_INCREMENT PRIMARY KEY,
+        nomR VARCHAR(255) DEFAULT NULL,
+        numAdrR VARCHAR(20) DEFAULT NULL,
+        voieAdrR VARCHAR(255) DEFAULT NULL,
+        cpR char(5) DEFAULT NULL,
+        villeR VARCHAR(255) DEFAULT  NULL,
+        longitudeDegR FLOAT DEFAULT NULL,
+        latitudeDegR FLOAT DEFAULT NULL,
+        descR TEXT,
+        horairesR TEXT,
         added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
     $req->execute();
 
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS posseder_resto(
-        mailU VARCHAR(255) NOT NULL,
-        idR INT NOT NULL,
+        mailU VARCHAR(150) NOT NULL,
+        idR BIGINT NOT NULL,
         CONSTRAINT fk_mailU FOREIGN KEY (mailU) REFERENCES utilisateur(mailU),
-        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)    
+        CONSTRAINT fk_idRPO FOREIGN KEY (idR) REFERENCES resto(idR)    
     )");
     $req->execute();
 
     // photo table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS photo(
-        idP INT AUTO_INCREMENT PRIMARY KEY,
-        cheminP VARCHAR(255) NOT NULL,
-        idR INT NOT NULL,
+        idP BIGINT AUTO_INCREMENT PRIMARY KEY,
+        cheminP VARCHAR(255) DEFAULT NULL,
+        idR BIGINT DEFAULT NULL,
         uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)
+        CONSTRAINT fk_idRP FOREIGN KEY(idR) REFERENCES resto(idR)
     )");
     $req->execute();
 
     // aimer table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS aimer(
-        idR INT NOT NULL,
+        idR BIGINT NOT NULL,
         mailU VARCHAR(150) NOT NULL,
         liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT pk_idR_mailU PRIMARY KEY (idR, mailU),
-        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR),
-        CONSTRAINT fk_idU FOREIGN KEY (mailU) REFERENCES utilisateur(mailU)
+        CONSTRAINT fk_idRA FOREIGN KEY (idR) REFERENCES resto(idR),
+        CONSTRAINT fk_idUA FOREIGN KEY (mailU) REFERENCES utilisateur(mailU)
     )");
     $req->execute();
 
     // critiquer table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS critiquer(
-        idR INT NOT NULL,
-        mailU INT NOT NULL,
-        note INT,
-        commentaire VARCHAR(255),
+        idR BIGINT NOT NULL,
+        mailU VARCHAR(150) NOT NULL,
+        note INT DEFAULT NULL,
+        commentaire VARCHAR(4096) DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR),
-        CONSTRAINT fk_idU FOREIGN KEY (mailU) REFERENCES utilisateur(mailU)
+        CONSTRAINT fk_idRC FOREIGN KEY (idR) REFERENCES resto(idR),
+        CONSTRAINT fk_idUC FOREIGN KEY (mailU) REFERENCES utilisateur(mailU)
     )");
     $req->execute();
 
     // menu table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS menu(
-        idM INT AUTO_INCREMENT PRIMARY KEY,
+        idM BIGINT AUTO_INCREMENT PRIMARY KEY,
         nomM VARCHAR(255) NOT NULL,
-        descM VARCHAR(255) NOT NULL,
+        descM VARCHAR(300) NOT NULL,
         prixM INT NOT NULL,
-        idR INT NOT NULL,
+        idR BIGINT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)
+        CONSTRAINT fk_idRM FOREIGN KEY (idR) REFERENCES resto(idR)
     )");
     $req->execute();
 
     // plat table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS plat(
-        idP INT AUTO_INCREMENT PRIMARY KEY,
+        idP BIGINT AUTO_INCREMENT PRIMARY KEY,
         nomP VARCHAR(255) NOT NULL,
         descP VARCHAR(255) NOT NULL,
         prixP NUMERIC(5,2) NOT NULL,
-        idM INT NOT NULL,
-        idR INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT fk_idM FOREIGN KEY (idM) REFERENCES menu(idM),
-        CONSTRAINT fk_idR FOREIGN KEY (idR) REFERENCES resto(idR)                               
+        idM BIGINT NOT NULL,
+        idR BIGINT NOT NULL,
+        typeCuisine BIGINT DEFAULT NULL,
+        added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT fk_tCP FOREIGN KEY (typeCuisine) REFERENCES typecuisine(idTC),
+        CONSTRAINT fk_idMP FOREIGN KEY (idM) REFERENCES menu(idM),
+        CONSTRAINT fk_idRPL FOREIGN KEY (idR) REFERENCES resto(idR)                               
     )");
     $req->execute();
 
+    // proposer table
+    $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS proposer(
+        idR BIGINT NOT NULL,
+        idTC BIGINT NOT NULL,
+        PRIMARY KEY (idR, idTC),
+        CONSTRAINT fk_idP FOREIGN KEY (idTC) REFERENCES typecuisine(idTC),
+        CONSTRAINT fk_idRPP FOREIGN KEY (idR) REFERENCES resto(idR)
+    )");
+    $req->execute();
 
     // failed job table
     $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS failed_jobs(
@@ -127,4 +137,17 @@ function migrate(){
         failed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
     $req->execute();
+
+    $req = $cnx->prepare("CREATE TABLE IF NOT EXISTS preferer(
+        `mailU` varchar(150) NOT NULL,
+        `idTC` bigint NOT NULL,
+        `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`mailU`,`idTC`),
+        KEY `fk_idTC` (`idTC`),
+        CONSTRAINT `fk_idTCPR` FOREIGN KEY (`idTC`) REFERENCES `typecuisine` (`idTC`),
+        CONSTRAINT `fk_mailUPR` FOREIGN KEY (`mailU`) REFERENCES `utilisateur` (`mailU`)                           
+    )");
+    $req->execute();
+
+    echo("Tables created successfully");
 }

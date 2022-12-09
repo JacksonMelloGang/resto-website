@@ -1,5 +1,6 @@
 /.DS_Store
 .idea
 .vscode
-.idea
+.idea/*
 .idea/php.xml
+.vscode/*

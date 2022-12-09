@@ -11,6 +11,9 @@ function controleurPrincipal($action) {
 
     $registered_routes = array(
         "home" => "homeController",
+        "cgu" => "homeController",
+
+        // Restaurants controller
         "showRestaurants" => "restaurantController",
         "showRestaurant" => "restaurantController",
 
@@ -30,6 +33,7 @@ function controleurPrincipal($action) {
 
 
         // critique Controller
+        "showEditCritique" => "critiqueController",
         "addCritique" => "critiqueController",
         "delCritique" => "critiqueController",
         "editCritique" => "critiqueController",

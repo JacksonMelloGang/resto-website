@@ -19,6 +19,11 @@ function showRestaurants(){
 function showRestaurant(){
     $idR = filter_input(INPUT_GET, 'idR', FILTER_SANITIZE_NUMBER_INT);
 
+    if($idR == null){
+        showRestaurants();
+        return;
+    }
+
     $unResto = getRestoByIdR($idR);
 
     $lesTypesCuisine = getTypesCuisineByIdR($idR);

@@ -7,7 +7,7 @@ ob_start();
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
-        <h2 class="inactive underlineHover" ><a href="index.php?action=showRegister"> Se connecter </a></h2>
+        <h2 class="inactive underlineHover" ><a href="index.php?action=showLogin"> Se connecter </a></h2>
         <h2 class="active" style="color: #92badd">Créer un compte</h2>
 
         <!-- Icon -->
@@ -16,8 +16,9 @@ ob_start();
         </div>
 
         <!-- Login Form -->
-        <form action="index.php?action=connect" method="post">
+        <form action="index.php?action=register" method="post">
             <input type="text" id="mailU" class="fadeIn second" style="color:black;" name="mailU" placeholder="Mail">
+            <input type="text" id="pseudoU" class="fadeIn third" name="pseudoU" placeholder="Nom d'utilisateur">
             <input type="text" id="mdpU" class="fadeIn third" name="mdpU" placeholder="Mot de passe">
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>

@@ -22,7 +22,7 @@ function connect(){
     $mdpU = "";
 
     // get value from form
-    $mdpU = filter_input(INPUT_POST, 'mdpU', FILTER_SANITIZE_STRING);
+    $mdpU = htmlspecialchars($_POST['mdpU']);
     $mailU = filter_input(INPUT_POST, 'mailU', FILTER_SANITIZE_EMAIL);
 
     // check if both are null
@@ -67,10 +67,16 @@ function register(){
     $mdpU = "";
     $pseudoU = "";
 
+    // check if values in $_POST are set, if not return;
+    if(!isset($_POST['mailU']) || !isset($_POST['mdpU']) || !isset($_POST['pseudoU'])){
+        showRegister("Veuillez remplir tous les champs");
+        return;
+    }
+
     // get value from form
     $mailU = filter_input(INPUT_POST, 'mailU', FILTER_SANITIZE_EMAIL);
-    $mdpU = filter_input(INPUT_POST, 'mdpU', FILTER_SANITIZE_STRING);
-    $pseudoU = filter_input(INPUT_POST, 'pseudoU', FILTER_SANITIZE_STRING);
+    $mdpU = htmlspecialchars($_POST['mdpU']);
+    $pseudoU = htmlspecialchars($_POST['pseudoU']);
 
     // check if either are null
     if($mailU == null || $mdpU == null || $pseudoU == null){

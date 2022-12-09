@@ -67,8 +67,8 @@ function updateUserPassword(){
     $mdpU = "";
 
     // get value from form
-    $mdpU = filter_input(INPUT_POST, 'mdpU', FILTER_SANITIZE_STRING);
-    $mdpU2 = filter_input(INPUT_POST, 'mdpU2', FILTER_SANITIZE_STRING);
+    $mdpU = htmlspecialchars($_POST['mdpU']);
+    $mdpU2 = htmlspecialchars($_POST['mdpU2']);
 
     // check if both are null
     if($mdpU == null || $mdpU2 == null){
@@ -142,7 +142,7 @@ function updatePseudo(){
     $pseudoU = "";
 
     // get value from form
-    $pseudoU = filter_input(INPUT_POST, 'pseudoU', FILTER_SANITIZE_STRING);
+    $pseudoU = htmlspecialchars($_POST['pseudoU']);
 
     // check if both are null
     if($pseudoU == null){

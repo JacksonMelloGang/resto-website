@@ -7,9 +7,6 @@ include "database/seeder.php";
 if(isset($_GET['password']) && $_GET['password'] == "greATioGHRGRe5.4g56og"){
     // run migration
     migrate();
-
-    // run seeder
-    seed();
 } else {
     echo "You are not allowed to run this script";
 }

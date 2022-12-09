@@ -10,3 +10,9 @@ function home(){
 
     require "vue/vueHome.php";
 }
+
+function cgu(){
+    $title = "Resto - CGU";
+
+    require "vue/vueCgu.php";
+}

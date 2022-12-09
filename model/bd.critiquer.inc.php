@@ -24,6 +24,22 @@ function getCritiquerByIdR($idR) {
     return $resultat;
 }
 
+function getCritiquerByIdMailU($mailu, $idR){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("select * from critiquer where mailU=:mailU AND idR=:idR");
+        $req->bindValue(':mailU', $mailu, PDO::PARAM_STR);
+        $req->bindValue(':idR', $idR, PDO::PARAM_INT);
+        $req->execute();
+
+        $ligne = $req->fetch(PDO::FETCH_ASSOC);
+        return $ligne;
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+}
+
 function getNoteMoyenneByIdR($idR) {
 
     try {
@@ -78,19 +94,22 @@ function supprimerCritique($idR, $mailU) {
 }
 
 function modifierCritique($idR, $mailU, $note, $commentaire) {
+
     try {
         $cnx = connexionPDO();
         $req = $cnx->prepare("UPDATE critiquer set note=:note, commentaire=:commentaire where idR=:idR AND mailU=:mailU");
         $req->bindValue(':idR', $idR, PDO::PARAM_INT);
-        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $req->bindValue(':mailU', $mailU, );
         $req->bindValue(':note', $note, PDO::PARAM_INT);
-        $req->bindValue(':commentaire', $commentaire, PDO::PARAM_STR);
-        
-        $req->execute();
+        $req->bindValue(':commentaire', $commentaire, );
+        $result = $req->execute();
+
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage();
         die();
     }
+
+    return $result;
 }
 
 function getCritiques(){
