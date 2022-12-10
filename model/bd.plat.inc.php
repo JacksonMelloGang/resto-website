@@ -2,7 +2,7 @@
 
 require_once "model\authentification.inc.php";
 
-function getPlatsFromidR($idR){
+function getPlatsByIdR($idR){
     $cnx = connexionPDO(); // get pdo connexionPDO()
 
     $req = $cnx->prepare("SELECT * FROM plat WHERE idR = :idR");

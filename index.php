@@ -23,7 +23,7 @@ if (isset($_GET["action"])) {
 $route = controleurPrincipal($action); 
 require_once "$racine\\controller\\$route[0].php";
 
-
+// if error
 if($route[0] == "errorController"){
     // error
     if(isset($registered_routes[$action])){

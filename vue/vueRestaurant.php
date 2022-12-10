@@ -88,6 +88,28 @@ include("components/search_popup.php");
 
     <?php } ?>
 
+    <div style="width:70%;margin-bottom: 5%">
+        <h2 id="crit">Plats Proposés</h2>
+
+        <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
+            <?php
+            if(count($lesPlats) == 0){
+                for ($i = 0; $i < count($lesPlats); $i++) { ?>
+                    <div style="border: red 2px solid; padding: 10px;" class="card">
+
+                        <div>
+                            <h3><?= $lesPlats[$i]["nomP"]; ?></h3>
+                            <p><?= $lesPlats[$i]["descP"]; ?></p>
+                            <p><?= $lesPlats[$i]["prixP"]; ?> €</p>
+                        </div>
+                    </div>
+         <?php }
+            } else {
+                echo("<p>Aucun plat proposé pour le moment</p>");
+            } ?>
+
+        </div>
+    </div>
 
 <div style="width:70%;margin-bottom: 5%">
     <h2 id="crit">Critiques</h2>

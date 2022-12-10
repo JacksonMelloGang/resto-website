@@ -1,5 +1,6 @@
 <?php
 
+include_once "{$GLOBALS['racine']}/model/bd.plat.inc.php";
 include_once "{$GLOBALS['racine']}/model/bd.resto.inc.php";
 include_once "{$GLOBALS['racine']}/model/bd.typecuisine.inc.php";
 include_once "{$GLOBALS['racine']}/model/bd.photo.inc.php";
@@ -26,6 +27,8 @@ function showRestaurant(){
 
     $unResto = getRestoByIdR($idR);
 
+    // get list of plats made by this restaurant
+    $lesPlats = getPlatsByIdR($idR);
     $lesTypesCuisine = getTypesCuisineByIdR($idR);
     $lesPhotos = getPhotosByIdR($idR);
     $noteMoy = getNoteMoyenneByIdR($idR);
@@ -39,17 +42,14 @@ function showRestaurant(){
         $noteMoy = 0;
     }
 
-    if($critiques === null){
-        $critiques = ['pseudoU' => "aucune critique", "", ""];
-    }
-
     foreach($critiques as $critique){
         if($critique['mailU'] === $mailU){
             $hasAlreadyCommented = true;
         }
     }
 
-    $title = "Resto - {$unResto['nomR']}";
+
     // show page
+    $title = "Resto - {$unResto['nomR']}";
     include("{$GLOBALS['racine']}/vue/vueRestaurant.php");
 }
