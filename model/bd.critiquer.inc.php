@@ -63,9 +63,10 @@ function getNoteMoyenneByIdR($idR) {
 }
 
 function ajouterCritique($idR, $mailU, $note, $commentaire) {
+    // Ajout d'une critique dans la base de données
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("INSERT INTO critiquer values (:idR, :mailU, :note, :commentaire)");
+        $req = $cnx->prepare("INSERT INTO critiquer(idr, mailu, note, commentaire) values (:idR, :mailU, :note, :commentaire)");
         $req->bindValue(':idR', $idR, PDO::PARAM_INT);
         $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
         $req->bindValue(':note', $note, PDO::PARAM_INT);
@@ -79,7 +80,7 @@ function ajouterCritique($idR, $mailU, $note, $commentaire) {
 }
 
 function supprimerCritique($idR, $mailU) {
-    
+    // Suppression d'une critique à partir de son idR et mailU dans la DB
     try {
         $cnx = connexionPDO();
         $req = $cnx->prepare("DELETE from critiquer where idR=:idR AND mailU=:mailU");
@@ -94,7 +95,7 @@ function supprimerCritique($idR, $mailU) {
 }
 
 function modifierCritique($idR, $mailU, $note, $commentaire) {
-
+    // Modification de la note et du commentaire d'une critique à partir de son idR et mailU dans la DB
     try {
         $cnx = connexionPDO();
         $req = $cnx->prepare("UPDATE critiquer set note=:note, commentaire=:commentaire where idR=:idR AND mailU=:mailU");
@@ -113,6 +114,7 @@ function modifierCritique($idR, $mailU, $note, $commentaire) {
 }
 
 function getCritiques(){
+    // récupérer la liste des critiques totales
     $resultat = array();
 
     try {

@@ -16,3 +16,10 @@ function cgu(){
 
     require "vue/vueCgu.php";
 }
+
+function recherche(){
+    $title = "Resto - Recherche";
+    $critere = $_GET["critere"] ?? "nom";
+
+    require "vue/vueRechercheResto.php";
+}

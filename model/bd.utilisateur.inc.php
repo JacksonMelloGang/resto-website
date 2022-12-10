@@ -40,23 +40,6 @@ function getUtilisateurByMailU($mailU) {
     return $resultat;
 }
 
-function getUsernameByMailU($mailU) {
-
-    try {
-        $cnx = connexionPDO();
-        $req = $cnx->prepare("select pseudoU from utilisateur where mailU=:mailU");
-        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
-        $req->execute();
-        
-        $resultat = $req->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        print "Erreur !: " . $e->getMessage();
-        die();
-    }
-    
-    return $resultat["pseudoU"];
-}
-
 function addUtilisateur($mailU, $mdpU, $pseudoU, $rang = 0) {
     try {
         $cnx = connexionPDO();
@@ -76,7 +59,7 @@ function addUtilisateur($mailU, $mdpU, $pseudoU, $rang = 0) {
     return $resultat;
 }
 
-function getUtilisateurRang($mailU){
+function getUserRank($mailU){
     try {
         $cnx = connexionPDO();
         $req = $cnx->prepare("select rangU from utilisateur where mailU=:mailU");
@@ -196,7 +179,7 @@ function updateRank($mailU, $userRang){
     // check if userrang exists in userRang table
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("SELECT * FROM userrang WHERE id = :userRang");
+        $req = $cnx->prepare("SELECT * FROM userrang WHERE idrang = :userRang");
         $req->bindValue(':userRang', $userRang, PDO::PARAM_INT);
         $req->execute();
         $result = $req->fetch(PDO::FETCH_ASSOC);
@@ -219,6 +202,22 @@ function updateRank($mailU, $userRang){
             die();
         }
     }
+}
+
+function deleteUtilisateur($mailU){
+    // DELETE USER FROM DB
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("DELETE FROM utilisateur WHERE mailU = :mailU");
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $result = $req->execute();
+
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+
+    return $result;
 }
 
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {

@@ -12,6 +12,7 @@ function controleurPrincipal($action) {
     $registered_routes = array(
         "home" => "homeController",
         "cgu" => "homeController",
+        "recherche" => "homeController",
 
         // Restaurants controller
         "showRestaurants" => "restaurantController",

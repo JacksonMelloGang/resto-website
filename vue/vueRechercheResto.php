@@ -1,7 +1,9 @@
+<?php
+    ob_start();
+?>
 
 <h1>Recherche d'un restaurant</h1>
 <form action="./?action=recherche&critere=<?= $critere ?>" method="POST">
-
 
     <?php
     switch ($critere) {
@@ -26,3 +28,6 @@
     <input type="submit" value="Rechercher" />
 
 </form>
+<?php
+    $content = ob_get_clean();
+    require "vue/layout/layout.php";

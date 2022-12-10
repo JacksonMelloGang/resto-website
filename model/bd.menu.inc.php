@@ -45,7 +45,9 @@ function addMenu($nomM, $descM, $prixM, $idR){
     $req->bindParam(':descM', $descM);
     $req->bindParam(':prixM', $prixM);
     $req->bindParam(':idR', $idR);
-    $req->execute();
+    $result = $req->execute();
+
+    return $req->execute();
 }
 
 function deleteMenu($idM){
@@ -53,7 +55,9 @@ function deleteMenu($idM){
 
     $req = $cnx->prepare("DELETE FROM menu WHERE idM = :idM");
     $req->bindParam(':idM', $idM);
-    $req->execute();
+    $result = $req->execute();
+
+    return $result;
 }
 
 function updateMenu($idM, $nomM, $descM, $prixM, $idR){
@@ -65,5 +69,7 @@ function updateMenu($idM, $nomM, $descM, $prixM, $idR){
     $req->bindParam(':descM', $descM);
     $req->bindParam(':prixM', $prixM);
     $req->bindParam(':idR', $idR);
-    $req->execute();
+    $result = $req->execute();
+
+    return $result;
 }

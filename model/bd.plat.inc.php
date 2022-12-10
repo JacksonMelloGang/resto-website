@@ -37,14 +37,15 @@ function getPlat($idP){
     return $plat;
 }
 
-function addPlat($nomP, $descP, $prixP, $idR){
+function addPlat($nomP, $descP, $prixP, $idM, $idR){
     $cnx = connexionPDO(); // get pdo connexionPDO()
 
-    $req = $cnx->prepare("INSERT INTO plat (nomP, descP, prixP, idR) VALUES (:nomP, :descP, :prixP, :idR)");
+    $req = $cnx->prepare("INSERT INTO plat (nomP, descP, prixP, idM, idR) VALUES (:nomP, :descP, :prixP, :idM, :idR)");
     $req->bindParam(':nomP', $nomP);
     $req->bindParam(':descP', $descP);
     $req->bindParam(':prixP', $prixP);
-    $req->bindParam(':idM', $idR);
+    $req->bindParam(':idM', $idM);
+    $req->bindParam(':idR', $idR);
     $req->execute();
 }
 

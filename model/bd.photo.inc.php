@@ -24,12 +24,13 @@ function getPhotosByIdR($idR) {
     return $resultat;
 }
 
-function addPhoto($chemin, $idR){
+function addPhoto($chemin, $idR = ""){
+    // Ajouter une photo dans la BD
     try {
         $cnx = connexionPDO();
-        $req = $cnx->prepare("INSERT INTO photo (chemin, idR) values (:chemin, :idR)");
+        $req = $cnx->prepare("INSERT INTO photo (cheminP, idR) values (:chemin, :idR)");
         $req->bindValue(':chemin', $chemin, PDO::PARAM_STR);
-        $req->bindValue(':idR', $idR, PDO::PARAM_INT);
+        $req->bindValue(':idR', $idR, );
 
         $resultat = $req->execute();
     } catch (PDOException $e) {
@@ -40,6 +41,7 @@ function addPhoto($chemin, $idR){
 }
 
 function deletePhoto($idP){
+    // Delete the photo from the database
     try {
         $cnx = connexionPDO();
         $req = $cnx->prepare("DELETE FROM photo WHERE idP=:idP");

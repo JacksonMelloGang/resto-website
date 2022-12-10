@@ -7,7 +7,9 @@ require_once "{$GLOBALS['racine']}\model\bd.typecuisine.inc.php";
 
 
 function monProfil(){
+    // check if user is logged in, show login page if not
     if (isLoggedOn()){
+        // get various data about the user
         $mailU = getMailULoggedOn();
         $util = getUtilisateurByMailU($_SESSION['mailU']);
 
@@ -15,6 +17,7 @@ function monProfil(){
 
         $mesTypeCuisineAimes = getTypesCuisinePreferesByMailU($_SESSION['mailU']);
 
+        // display plage
         $title = "Mon profil";
         require('vue/vueMonProfil.php');
     } else {
@@ -24,9 +27,11 @@ function monProfil(){
 }
 
 function editPassword($msg = ""){
+    // check if user is logged in, show login page if not
     if (isLoggedOn()){
         $title = "Modifier mon mot de passe";
 
+        // display page
         require('vue/vueEditPassword.php');
     } else {
         header("Location: ./?action=showLogin");
@@ -38,6 +43,7 @@ function editUsername($msg = ""){
         $title = "Modifier mon pseudo";
         $pseudo = getUtilisateurByMailU($_SESSION['mailU'])['pseudoU'];
 
+        // display page
         require('vue/vueEditUsername.php');
     } else {
         header("Location: ./?action=showLogin");

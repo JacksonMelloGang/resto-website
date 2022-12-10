@@ -146,6 +146,60 @@ function getRestoTendance($numberresto){
     }
 }
 
+function addResto($nomR, $numAdrR, $voieAdrR, $cpR, $villeR, $longitudeR, $latitudeR, $descR, $horairesR) {
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("INSERT into resto(nomR, numAdrR, voieAdrR, cpR, villeR, longitudeDegR, latitudeDegR, descR, horairesR) values(:nomR, :numAdrR, :voieAdrR, :cpR, :villeR, :longitudeDegR, :latitudeDegR, :descR, :horairesR)");
+        $req->bindValue(':nomR', $nomR, PDO::PARAM_STR);
+        $req->bindValue(':numAdrR', $numAdrR, PDO::PARAM_INT);
+        $req->bindValue(':voieAdrR', $voieAdrR, PDO::PARAM_STR);
+        $req->bindValue(':cpR', $cpR, PDO::PARAM_STR);
+        $req->bindValue(':villeR', $villeR, PDO::PARAM_STR);
+        $req->bindValue(':longitudeDegR', $longitudeR, PDO::PARAM_STR);
+        $req->bindValue(':latitudeDegR', $latitudeR, PDO::PARAM_STR);
+        $req->bindValue(':descR', $descR, PDO::PARAM_STR);
+        $req->bindValue(':horairesR', $horairesR, PDO::PARAM_STR);
+        $result = $req->execute();
+
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+
+    return $result;
+}
+
+function delResto($idR){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("DELETE from resto where idR = :idR");
+        $req->bindValue(':idR', $idR, PDO::PARAM_INT);
+        $result = $req->execute();
+
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+
+    return $result;
+}
+
+function giveOwnerResto($idR, $mailU){
+    try {
+        $cnx = connexionPDO();
+        $req = $cnx->prepare("INSERT into posseder_resto(idR, mailU) values(:idR, :mailU)");
+        $req->bindValue(':idR', $idR, PDO::PARAM_INT);
+        $req->bindValue(':mailU', $mailU, PDO::PARAM_STR);
+        $result = $req->execute();
+
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage();
+        die();
+    }
+
+    return $result;
+}
+
 if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
     // prog principal de test
     header('Content-Type:text/plain');

@@ -1,5 +1,7 @@
 <?php
 
+require_once "database\migration.php";
+
 function connexionPDO() {
     $login = "root";
     $mdp = "";

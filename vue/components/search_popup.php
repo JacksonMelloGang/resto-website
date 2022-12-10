@@ -7,7 +7,7 @@
             <input type="text" placeholder="Rechercher rapide">
             <input type="submit" value="Rechercher">
         </form>
-        <a href="/about.html">Recherche Avancée</a>
+        <a href="index.php?action=recherch&critere=nom">Recherche Avancée</a>
 
     </div>
 </div>
