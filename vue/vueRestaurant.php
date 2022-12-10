@@ -93,7 +93,7 @@ include("components/search_popup.php");
 
         <div style="border: black 2px solid;border-radius:5px;padding: 10px;">
             <?php
-            if(count($lesPlats) == 0){
+            if(count($lesPlats) != 0){
                 for ($i = 0; $i < count($lesPlats); $i++) { ?>
                     <div style="border: red 2px solid; padding: 10px;" class="card">
 
